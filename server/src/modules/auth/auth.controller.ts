@@ -63,8 +63,8 @@ export class AuthController {
         res.clearCookie("access_token", {
             ...this.cookieOptions,
             expires: new Date(0),
-            maxAge: 0
-        })
-        return res.status(200)
+            maxAge: 0,
+        });
+        return res.status(200).send({ message: "로그아웃 성공" });
     }
 }
