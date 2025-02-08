@@ -75,9 +75,8 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
             const user: User = { socketId: socket.id, userId, userName };
             roomUsers.push(user);
             socket.join(roomId);
-
-            this.server.to(roomId).emit("room_users", this.rooms.get(roomId));
         }
+        this.server.to(roomId).emit("room_users", this.rooms.get(roomId));
     }
 
     @SubscribeMessage("leave_room")
