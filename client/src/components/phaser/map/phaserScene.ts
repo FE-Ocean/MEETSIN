@@ -99,9 +99,6 @@ export class MeetsInPhaserScene extends Phaser.Scene {
 
     create(): void {
         const map = this.make.tilemap({ key: "map" });
-        const { width: canvasWidth, height: canvasHeight } = this.sys.game.canvas;
-        const width = canvasWidth / 2 - (map.widthInPixels / 2);
-        const height = canvasHeight / 2 - (map.heightInPixels / 2);
         const tileBase = map.addTilesetImage("base", "base")!;
         const tileIndoor = map.addTilesetImage("indoor", "indoor")!;
         const tileUrban = map.addTilesetImage("urban", "urban")!;
