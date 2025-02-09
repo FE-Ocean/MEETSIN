@@ -43,13 +43,12 @@ export class JwtGuard extends AuthGuard("jwt") {
             req.cookies["access_token"] || req.headers["authorization"]?.replace("Bearer ", "");
 
         if (!token) {
-            throw new UnauthorizedException("UnAuthorized");
+            throw new UnauthorizedException("Authorization 요청 헤더를 추가해주세요");
         }
-
         const userInfoByToken = await this.validateToken(token);
 
         if (!userInfoByToken.id) {
-            throw new UnauthorizedException("token is not valid");
+            throw new UnauthorizedException("유효한 토큰이 아닙니다.");
         }
 
         const user = await this.usersRepository.findUserById(userInfoByToken.id);
