@@ -5,6 +5,7 @@ import useModal from "@/components/modal/hooks/useModal";
 import { LANDING_CONTENTS } from "@/constants/landing.const";
 import { motion, AnimatePresence } from "motion/react";
 import style from "./style.module.scss";
+import Image from "next/image";
 
 const Home = () => {
     const { onOpen } = useModal("login");
@@ -51,8 +52,13 @@ const Home = () => {
                             onMouseOver={stopCarousel}
                             onMouseLeave={startCarousel}
                         >
-                            {/* TODO: 여기 img로 수정 */}
-                            <div className={style.carousel_image} />
+                            <Image 
+                                src={LANDING_CONTENTS[currentIndex].image} 
+                                className={style.carousel_image} 
+                                alt=""
+                                priority={currentIndex === 0}
+                                quality={75}
+                            />
                             <div className={style.carousel_text}>
                                 <p className={style.carousel_text_title}>
                                     {LANDING_CONTENTS[currentIndex].title}
