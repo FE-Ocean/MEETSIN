@@ -105,11 +105,6 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
         }
     }
 
-    @SubscribeMessage("get_room_users")
-    handleGetRoomUsers(@MessageBody() roomId: string, @ConnectedSocket() socket: Socket) {
-        socket.emit("room_users", this.rooms.get(roomId) || []);
-    }
-
     @SubscribeMessage("new_message")
     handleMessage(@MessageBody() messageInfo: MessageInfoDTO): void {
         this.server
