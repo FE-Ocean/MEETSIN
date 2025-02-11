@@ -50,11 +50,11 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
     }
 
     handleConnection(@ConnectedSocket() socket) {
-        this.logger.log(`소켓 연결됨 ${socket.id} ${socket.nsp.name}`);
+        this.logger.log(`소켓 연결됨 - socketId: ${socket.id}`);
     }
 
     handleDisconnect(@ConnectedSocket() socket) {
-        this.logger.log(`소켓 연결 끊어짐 ${socket.id}`);
+        this.logger.log(`소켓 연결 끊어짐 - socketId: ${socket.id}`);
     }
 
     @SubscribeMessage("join_room")
