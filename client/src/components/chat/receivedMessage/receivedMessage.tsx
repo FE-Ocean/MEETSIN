@@ -11,7 +11,7 @@ const ReceivedMessage = (props: IMessageProps) => {
     const { nickname, message, time } = props;
 
     return (
-        <div className={style.container}>
+        <li className={style.container}>
             <div className={style.avatar} />
             <div className={style.wrapper}>
                 <span className={style.nickname}>{nickname}</span>
@@ -20,7 +20,7 @@ const ReceivedMessage = (props: IMessageProps) => {
                     <span className={style.time}>{formatTimeFromISO(time)}</span>
                 </div>
             </div>
-        </div>
+        </li>
     );
 };
 

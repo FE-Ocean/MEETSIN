@@ -81,19 +81,19 @@ export const useScreenShare = (roomId: string) => {
                 peerData.connection = connection;
                 console.log(data.type);
                 switch (data.type) {
-                case "start-screen-share":
-                    // isscreenshare update?
-                    break;
-                case "stop-screen-share":
-                    peerData.stream = undefined;
-                case "request-screen-share":
-                    const myPeer = currentPeers.get(myPeerId);
-                    if (myPeer && myPeer.stream) {
-                        peer.call(connection.peer, myPeer.stream);
-                    }
-                default:
-                    updatePeers(connection.peer, peerData);
-                    break;
+                    case "start-screen-share":
+                        // isscreenshare update?
+                        break;
+                    case "stop-screen-share":
+                        peerData.stream = undefined;
+                    case "request-screen-share":
+                        const myPeer = currentPeers.get(myPeerId);
+                        if (myPeer && myPeer.stream) {
+                            peer.call(connection.peer, myPeer.stream);
+                        }
+                    default:
+                        updatePeers(connection.peer, peerData);
+                        break;
                 }
             });
         });

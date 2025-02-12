@@ -18,7 +18,7 @@ module.exports = {
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-explicit-any": "off",
-        indent: ["error", 4],
+        indent: ["error", 4, { SwitchCase: 1 }],
         quotes: ["error", "double"],
         semi: ["error", "always"],
         "no-var": "error",
