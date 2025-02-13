@@ -91,8 +91,8 @@ export class MeetsInPhaserScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("map", "/map/map.json");
         for (let i = 1; i <= 6; i++) {
             this.load.spritesheet(`player${i}`, `/players/player${i}.png`, {
-                frameWidth: 16,
-                frameHeight: 16,
+                frameWidth: 32,
+                frameHeight: 32,
             });
         }
     }
@@ -330,7 +330,12 @@ export class MeetsInPhaserScene extends Phaser.Scene {
 
     private emitPlayerMovement(player: Phaser.Physics.Arcade.Sprite, direction: Direction): void {
         if (!player || !this.socket) return;
-        this.socket.emit("move", { x: player.x, y: player.y, roomId: this.roomId, direction });
+        this.socket.emit("move", {
+            x: player.x,
+            y: player.y,
+            roomId: this.roomId,
+            direction,
+        });
     }
 
     private emitStopMovement(): void {
@@ -343,12 +348,12 @@ export class MeetsInPhaserScene extends Phaser.Scene {
 
         this.otherPlayers.getChildren().forEach((otherPlayer) => {
             const player = otherPlayer as OtherPlayerType;
-            player.nameTag.x = player.x + player.width / 2;
+            player.nameTag.x = player.x + player.displayWidth / 2;
             player.nameTag.y = player.y - 15;
         });
 
         if (this.player && this.player.nameTag) {
-            this.player.nameTag.x = this.player.x + this.player.width / 2;
+            this.player.nameTag.x = this.player.x + this.player.displayWidth / 2;
             this.player.nameTag.y = this.player.y - 15;
         }
     }
@@ -403,6 +408,7 @@ export class MeetsInPhaserScene extends Phaser.Scene {
         player.anims.play(`idle-down-${this.myCharacterId}`);
         player.setOrigin(0, 0);
         player.setSize(16, 16);
+        player.setDisplaySize(16, 16);
 
         this.physics.add.collider(player, this.layerBlockOutdoor);
         this.physics.add.collider(player, this.layerBlockWall);
@@ -435,6 +441,8 @@ export class MeetsInPhaserScene extends Phaser.Scene {
         otherPlayer.setCollideWorldBounds(true);
         otherPlayer.anims.play(`idle-down-${playerInfo.characterId}`);
         otherPlayer.setOrigin(0, 0);
+        otherPlayer.setSize(16, 16);
+        otherPlayer.setDisplaySize(16, 16);
         otherPlayer.playerId = playerInfo.playerId;
         otherPlayer.characterId = playerInfo.characterId;
         otherPlayer.nameTag = this.createNameTag(

@@ -21,7 +21,7 @@ const useMessage = ({
     };
 
     const sendMessage = () => {
-        if (!message) return;
+        if (!message || !message.trim()) return;
 
         const messageInfo = {
             roomId,

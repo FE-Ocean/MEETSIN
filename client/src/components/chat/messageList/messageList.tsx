@@ -15,7 +15,7 @@ const MessageList = (props: Props) => {
     const isMyMessage = (nickname: string) => nickname === user?.userName;
 
     return (
-        <ul className={style.messsage_list}>
+        <ul className={style.message_list}>
             {messages.map((message, index) => {
                 return isMyMessage(message.nickname) ? (
                     <MyMessage key={index} message={message.message} time={message.time} />
