@@ -7,10 +7,10 @@ import { User } from "src/modules/users/schemas/user.schema";
 export class UsersRepository {
     constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
 
-    createUser(userData: User) {
+    createUser(userData: Partial<User>) {
         return {
             ...userData,
-        } as User;
+        };
     }
 
     async findUserById(id: string) {
@@ -23,8 +23,8 @@ export class UsersRepository {
         return user;
     }
 
-    async saveUser(userData: User) {
-        await this.userModel.create(userData);
+    async saveUser(userData: Partial<User>) {
+        return await this.userModel.create(userData);
     }
 
     async updateAccessToken(user: User, accessToken: string) {

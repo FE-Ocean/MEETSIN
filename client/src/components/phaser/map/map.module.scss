@@ -1,3 +1,6 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixin";
+
 .map {
     position: relative;
     width: 100%;
@@ -5,4 +8,5 @@
     flex-shrink: 1;
     overflow: hidden;
     border-radius: 6px;
+    background-image: url("/map/background.png");
 }

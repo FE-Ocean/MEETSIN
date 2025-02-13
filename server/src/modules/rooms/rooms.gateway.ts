@@ -49,12 +49,12 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
         this.logger.log("init");
     }
 
-    handleConnection(@ConnectedSocket() socket: UserSocket) {
-        this.logger.log(`connect ${socket.id} ${socket.nsp.name}`);
+    handleConnection(@ConnectedSocket() socket) {
+        this.logger.log(`소켓 연결됨 - socketId: ${socket.id}`);
     }
 
     handleDisconnect(@ConnectedSocket() socket) {
-        this.logger.log("disconnect", socket.id);
+        this.logger.log(`소켓 연결 끊어짐 - socketId: ${socket.id}`);
     }
 
     @SubscribeMessage("join_room")
@@ -69,13 +69,18 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
         }
 
         const roomUsers = this.rooms.get(roomId);
-        const existingUser = roomUsers.find((user) => user.userId.toString() === userId.toString());
+        const existingUser = roomUsers.find((user) =>
+            new Types.ObjectId(user.userId).equals(userId),
+        );
 
-        if (!existingUser) {
+        if (existingUser) {
+            existingUser.socketId = socket.id;
+        } else {
             const user: User = { socketId: socket.id, userId, userName };
             roomUsers.push(user);
-            socket.join(roomId);
         }
+
+        socket.join(roomId);
         this.server.to(roomId).emit("room_users", this.rooms.get(roomId));
     }
 
@@ -100,11 +105,6 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
 
             this.server.to(roomId).emit("room_users", this.rooms.get(roomId));
         }
-    }
-
-    @SubscribeMessage("get_room_users")
-    handleGetRoomUsers(@MessageBody() roomId: string, @ConnectedSocket() socket: Socket) {
-        socket.emit("room_users", this.rooms.get(roomId) || []);
     }
 
     @SubscribeMessage("new_message")

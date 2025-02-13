@@ -19,23 +19,22 @@ export class AuthService {
         try {
             const userData = req.user as User;
 
-            let user: User;
-
             if (!userData) {
                 throw new BadRequestException("Unauthenticated");
             }
 
-            user = await this.usersRepository.findUserByEmailAndProvider(
+            let user = await this.usersRepository.findUserByEmailAndProvider(
                 userData.email,
                 userData.provider,
             );
 
             if (!user) {
-                user = await this.signUp(userData);
+                const newUser = await this.signUp(userData);
+                user = newUser.toObject();
             }
 
             const jwtPayload = {
-                id: user.id,
+                id: user._id.toString(),
                 email: user.email,
             };
 
@@ -51,9 +50,12 @@ export class AuthService {
         }
     }
 
-    async signUp(userData: User) {
-        const user = this.usersRepository.createUser(userData);
-        await this.usersRepository.saveUser(user);
-        return user;
+    async signUp(userData: Partial<User>) {
+        try {
+            const user = this.usersRepository.createUser(userData);
+            return await this.usersRepository.saveUser(user);
+        } catch (error) {
+            throw new ForbiddenException("회원가입 중 오류가 발생했습니다.");
+        }
     }
 }
