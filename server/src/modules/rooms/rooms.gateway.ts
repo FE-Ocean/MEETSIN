@@ -69,16 +69,15 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
         }
 
         const roomUsers = this.rooms.get(roomId);
-
-        const existingUserIndex = roomUsers.findIndex(
-            (user) => user.userId.toString() === userId.toString(),
+        const existingUser = roomUsers.find((user) =>
+            new Types.ObjectId(user.userId).equals(userId),
         );
 
-        if (existingUserIndex === -1) {
+        if (existingUser) {
+            existingUser.socketId = socket.id;
+        } else {
             const user: User = { socketId: socket.id, userId, userName };
             roomUsers.push(user);
-        } else {
-            roomUsers[existingUserIndex].socketId = socket.id;
         }
 
         socket.join(roomId);
