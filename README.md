@@ -1,4 +1,13 @@
+![Logo](/client/public/favicon.ico)
+
 # MEETSIN
+
+스터디 및 협업을 위한 메타버스 플랫폼
+
+## 데모
+
+[meetsin.link](meetsin.link)
+
 
 ## 스택
 
@@ -31,3 +40,18 @@
       <img src="https://img.shields.io/badge/jira-0052CC?style=for-the-badge&logo=jira&logoColor=white">
       <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
       <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+
+## 주요 기능
+
+- 타이머 및 푸시 알림
+- 실시간 채팅  
+- 화면 공유  
+
+## 제작자
+- [@etoile-j](https://www.github.com/etoile-j)  
+- [@leehyeonseop](https://www.github.com/leehyeonseop)  
+- [@donkeeman](https://www.github.com/donkeeman)  
+
+## 피드백
+
+피드백이 있으시면 feocean123@gmail.com 또는 [이슈](https://github.com/FE-Ocean/MEETSIN/issues)로 알려주세요.
