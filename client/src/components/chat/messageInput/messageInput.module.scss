@@ -2,24 +2,26 @@
 @import "../../../styles/mixin";
 
 .input_container {
-    @include custom_input(2px, 30px);
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding-right: 11px;
-    height: 38px;
+    @include custom_input(2px, 17px);
+    // display: flex;
+    // align-items: center;
+    // gap: 7px;
+    // padding-right: 3px;
+    // max-height: 38px;
 }
 
 .message_textarea {
-    overflow: hidden;
-    resize: none;
-    flex-grow: 1;
+    // overflow: hidden;
+    // resize: none;
+    // flex-grow: 1;
 }
 
 .send_button {
+    // position: absolute;
     width: 28px;
     height: 28px;
     border-radius: 50%;
+    // align-items: end;
 
     background-image: url(/icons/send.svg);
     background-repeat: no-repeat;
