@@ -3,25 +3,24 @@
 
 .input_container {
     @include custom_input(2px, 17px);
-    // display: flex;
-    // align-items: center;
-    // gap: 7px;
-    // padding-right: 3px;
-    // max-height: 38px;
 }
 
 .message_textarea {
-    // overflow: hidden;
-    // resize: none;
-    // flex-grow: 1;
+    display: block;
+    width: 100%;
+    max-height: 76px;
+    padding-right: 33px;
+    scrollbar-width: none;
+    resize: none;
 }
 
 .send_button {
-    // position: absolute;
+    position: absolute;
+    right: 24px;
+    bottom: 24.4px;
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    // align-items: end;
 
     background-image: url(/icons/send.svg);
     background-repeat: no-repeat;
