@@ -23,20 +23,6 @@ const useChatSocket = (params: Params) => {
     };
 
     useEffect(() => {
-        const handleBeforeUnload = () => {
-            roomSocket.emit("leave_room", { roomId, userId: user?.userId });
-            roomSocket.off("new_message");
-            roomSocket.disconnect();
-        };
-
-        window.addEventListener("beforeunload", handleBeforeUnload);
-
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, [roomId, user]);
-
-    useEffect(() => {
         if (!user || !roomId) return;
 
         if (!roomSocket.connected) {

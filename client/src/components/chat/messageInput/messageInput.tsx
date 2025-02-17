@@ -48,6 +48,7 @@ const MessageInput = () => {
             <textarea
                 className={style.message_textarea}
                 placeholder="메세지를 입력하세요."
+                aria-label="메세지 입력"
                 rows={1}
                 ref={textareaRef}
                 value={message}
