@@ -91,8 +91,8 @@ export class MeetsInPhaserScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("map", "/map/map.json");
         for (let i = 1; i <= 6; i++) {
             this.load.spritesheet(`player${i}`, `/players/player${i}.png`, {
-                frameWidth: 32,
-                frameHeight: 32,
+                frameWidth: 16,
+                frameHeight: 16,
             });
         }
     }
@@ -104,12 +104,7 @@ export class MeetsInPhaserScene extends Phaser.Scene {
         const tileUrban = map.addTilesetImage("urban", "urban")!;
 
         map.createLayer("ground", [tileBase, tileUrban], 0, 0);
-        this.layerBlockOutdoor = map.createLayer(
-            "block-outdoor",
-            [tileBase, tileUrban],
-            0,
-            0,
-        )!;
+        this.layerBlockOutdoor = map.createLayer("block-outdoor", [tileBase, tileUrban], 0, 0)!;
         this.layerBlockWall = map.createLayer("block-wall", [tileBase, tileUrban], 0, 0)!;
         this.layerBlockFurniture = map.createLayer(
             "block-furniture",
@@ -123,7 +118,7 @@ export class MeetsInPhaserScene extends Phaser.Scene {
 
         layerChairBack!.setDepth(2);
 
-        this.physics.world.setBounds(0,0, map.widthInPixels, map.heightInPixels);
+        this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         // this.cameras.main.setBounds(0,0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.scrollX = -map.widthInPixels / 2;
         this.cameras.main.scrollY = -map.heightInPixels / 2;
@@ -407,7 +402,6 @@ export class MeetsInPhaserScene extends Phaser.Scene {
         player.anims.play(`idle-down-${this.myCharacterId}`);
         player.setOrigin(0, 0);
         player.setSize(16, 16);
-        player.setDisplaySize(16, 16);
 
         this.physics.add.collider(player, this.layerBlockOutdoor);
         this.physics.add.collider(player, this.layerBlockWall);
@@ -441,7 +435,6 @@ export class MeetsInPhaserScene extends Phaser.Scene {
         otherPlayer.anims.play(`idle-down-${playerInfo.characterId}`);
         otherPlayer.setOrigin(0, 0);
         otherPlayer.setSize(16, 16);
-        otherPlayer.setDisplaySize(16, 16);
         otherPlayer.playerId = playerInfo.playerId;
         otherPlayer.characterId = playerInfo.characterId;
         otherPlayer.nameTag = this.createNameTag(
