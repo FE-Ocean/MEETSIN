@@ -52,9 +52,11 @@ const Home = () => {
                             onMouseOver={stopCarousel}
                             onMouseLeave={startCarousel}
                         >
-                            <Image 
-                                src={LANDING_CONTENTS[currentIndex].image} 
-                                className={style.carousel_image} 
+                            <Image
+                                src={LANDING_CONTENTS[currentIndex].image}
+                                className={style.carousel_image}
+                                width={300}
+                                height={300}
                                 alt=""
                                 priority={currentIndex === 0}
                                 quality={75}
