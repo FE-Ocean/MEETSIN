@@ -22,21 +22,37 @@
 
 ### 맵 (원격 모임 공간)
 
-<img src="/client/public/landing/map.png" width="500px" alt="map"/>
+<img src="https://github.com/user-attachments/assets/513ea9d0-fc6f-43fe-9283-d5bfe47d4271" width="600px" alt="map"/>
 
 ### 타이머 및 푸시 알림
 
-<img src="/client/public/landing/timer.png" width="500px" alt="timer"/>
+타이머를 설정하면 방에 있는 모든 멤버와 함께 집중할 수 있어요.
+
+<img src="https://github.com/user-attachments/assets/4427c70f-18ef-42e5-9230-9fccdbe4a8c6" width="600px" alt="timer"/>
+
+[푸시 알림 이미지 넣을 곳]
+
+시간이 끝나면 종료음과 푸시 알림을 보내드려요. _(MEETSIN 화면을 벗어난 경우에만 푸시 알림 전송)_
 
 ### 실시간 채팅
 
-<img src="/client/public/landing/chat.png" width="400px" alt="chat"/>
+<img src="https://github.com/user-attachments/assets/0999528a-9d92-45dc-85de-9044c7709606" width="600px" alt="chat"/>
 
 ### 화면 공유
 
-<img src="/client/public/landing/screen.png" width="700px" alt="screen"/>
+**화면 공유하기**
 
-<br>
+<img src="https://github.com/user-attachments/assets/e147d359-ed64-4145-8528-8f9d89b13788" width="700px" alt="화면 공유하기"/>
+
+<br><br>
+
+**화면 공유 보기**
+
+다른 멤버가 화면을 공유하면 오른쪽 상단의 '화면 공유 보기' 버튼이 활성화돼요.
+
+<img src="https://github.com/user-attachments/assets/63c1da1c-3e74-4d84-883c-a04d3c7d77d3" width="700px" alt="화면 공유 보기"/>
+
+<br><br>
 
 ## 제작자
 
