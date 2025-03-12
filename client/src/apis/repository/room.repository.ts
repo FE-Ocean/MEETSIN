@@ -1,5 +1,5 @@
-import { addAuthHeader, baseClient, createAuthHeader } from "@/modules/fetchClient";
-import { ICreateRoomResponse, IPatchRoom } from "@/types/room.type";
+import { baseClient, createAuthHeader } from "@/modules/fetchClient";
+import { IRoomModel, IPatchRoom } from "@/types/room.type";
 
 export const getRoomInfo = async (roomId: string, accessToken?: string) => {
     const headers = createAuthHeader(accessToken);
@@ -16,7 +16,7 @@ export const getUserRooms = async (accessToken?: string) => {
 };
 
 export const createRoom = async (roomNameInput: string) => {
-    return await baseClient.post<ICreateRoomResponse>("/rooms", {
+    return await baseClient.post<IRoomModel>("/rooms", {
         roomData: { roomName: roomNameInput },
     });
 };
