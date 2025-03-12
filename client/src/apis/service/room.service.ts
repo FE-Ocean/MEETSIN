@@ -46,7 +46,7 @@ export const useGetRoomData = (roomId: string) => {
     return useQuery({ queryKey: QUERY_KEY.room(roomId), queryFn: formatRoomData });
 };
 
-export const usePatchRoomData = () => {
+export const usePatchRoomData = (roomId: string) => {
     const queryClient = useQueryClient();
     const formatRoomData = async ({ roomName, roomId }: IPatchRoom) => {
         const res = (await patchRoom({ roomName, roomId })) as IRoomModel;
@@ -61,9 +61,8 @@ export const usePatchRoomData = () => {
     return useMutation({
         mutationFn: formatRoomData,
         onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: QUERY_KEY.rooms,
-            });
+            queryClient.invalidateQueries({ queryKey: QUERY_KEY.rooms });
+            queryClient.refetchQueries({ queryKey: QUERY_KEY.room(roomId) });
         },
     });
 };
