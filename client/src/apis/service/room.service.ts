@@ -8,7 +8,6 @@ import {
 } from "../repository/room.repository";
 import { IPatchRoom, IRoomModel } from "@/types/room.type";
 import { QUERY_KEY } from "@/constants/queryKey.const";
-import { IUser } from "@/types/user.type";
 
 interface ICreateRoom {
     roomNameInput: string;
@@ -25,7 +24,7 @@ export const useCreateRoom = () => {
         };
     };
 
-    return useMutation({ 
+    return useMutation({
         mutationFn: formatRoomData,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: QUERY_KEY.rooms });
@@ -41,14 +40,6 @@ export const useGetRoomData = (roomId: string) => {
             roomName: res.room_name,
             admin: res.admin,
             createdAt: res.created_at,
-            userIds: res.userIds.map((user) => {
-                return {
-                    userName: user.user_name,
-                    userId: user._id,
-                    profileImg: user.profile_img,
-                    email: user.email,
-                } as IUser;
-            }),
         };
     };
 
@@ -70,7 +61,7 @@ export const usePatchRoomData = () => {
     return useMutation({
         mutationFn: formatRoomData,
         onSuccess: () => {
-            queryClient.invalidateQueries({ 
+            queryClient.invalidateQueries({
                 queryKey: QUERY_KEY.rooms,
             });
         },
@@ -84,7 +75,6 @@ export const formatRoomsData = async (accessToken?: string) => {
         roomName: room.room_name,
         admin: room.admin,
         createdAt: room.created_at,
-        userIds: room.userIds,
     }));
 };
 
