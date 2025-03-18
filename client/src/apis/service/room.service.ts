@@ -43,7 +43,16 @@ export const useGetRoomData = (roomId: string) => {
         };
     };
 
-    return useQuery({ queryKey: QUERY_KEY.room(roomId), queryFn: formatRoomData });
+    return useQuery({
+        queryKey: ["room", roomId],
+        queryFn: formatRoomData,
+        retry: 0,
+        staleTime: 1000 * 60 * 5,
+        cacheTime: 1000 * 60 * 10,
+        refetchOnWindowFocus: false,
+        enabled: !!roomId,
+        initialData: undefined,
+    });
 };
 
 export const usePatchRoomData = (roomId: string) => {
