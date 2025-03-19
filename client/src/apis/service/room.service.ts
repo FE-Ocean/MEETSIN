@@ -44,7 +44,7 @@ export const useGetRoomData = (roomId: string) => {
     };
 
     return useQuery({
-        queryKey: ["room", roomId],
+        queryKey: QUERY_KEY.room(roomId),
         queryFn: formatRoomData,
         retry: 0,
         staleTime: 1000 * 60 * 5,
