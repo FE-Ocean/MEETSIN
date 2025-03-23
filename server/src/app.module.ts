@@ -29,7 +29,7 @@ dotenv.config();
         {
             provide: APP_INTERCEPTOR,
             useClass: ResponseInterceptor,
-        },
+        }
     ],
 })
 export class AppModule implements NestModule {
