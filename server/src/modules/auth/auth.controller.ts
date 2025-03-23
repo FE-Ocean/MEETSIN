@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Req, Res, UseGuards, HttpStatus } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CookieOptions, Response } from "express";
 import { AuthGuard } from "@nestjs/passport";
@@ -32,10 +32,10 @@ export class AuthController {
 
     @Get("/redirect/google")
     @UseGuards(AuthGuard("google"))
-    async googleAuthRedirect(@Req() req: LoginRequest, @Res() res: Response) {
+    async googleAuthRedirect(@Req() req: LoginRequest, @Res({ passthrough: true }) res: Response) {
         const { access_token } = await this.authService.signIn(req, res);
         res.cookie("access_token", access_token, this.cookieOptions);
-        res.redirect(process.env.CLIENT_URL);
+        return { redirectUrl: process.env.CLIENT_URL };
     }
 
     @Get("/login/kakao")
@@ -44,27 +44,25 @@ export class AuthController {
 
     @Get("/redirect/kakao")
     @UseGuards(AuthGuard("kakao"))
-    async kakaoAuthRedirect(@Req() req: LoginRequest, @Res() res: Response) {
+    async kakaoAuthRedirect(@Req() req: LoginRequest, @Res({ passthrough: true }) res: Response) {
         const { access_token } = await this.authService.signIn(req, res);
         res.cookie("access_token", access_token, this.cookieOptions);
-        res.redirect(process.env.CLIENT_URL);
+        return { redirectUrl: process.env.CLIENT_URL };
     }
 
-    // 토큰으로 유저 정보 가져오기
     @Get("/user")
     @UseGuards(JwtGuard)
-    async login(@Req() req: LoginRequest, @Res() res: Response) {
-        const user = this.userService.entityToDto(req.user);
-        res.json(user);
+    async getCurrentUser(@Req() req: LoginRequest) {
+        return this.userService.entityToDto(req.user);
     }
 
     @Post("/logout")
-    logout(@Req() req, @Res() res: Response) {
+    logout(@Res({ passthrough: true }) res: Response) {
         res.clearCookie("access_token", {
             ...this.cookieOptions,
             expires: new Date(0),
             maxAge: 0,
         });
-        return res.status(200).send({ message: "로그아웃 성공" });
+        return { message: "로그아웃 성공" };
     }
 }
