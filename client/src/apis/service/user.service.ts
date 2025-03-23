@@ -7,8 +7,8 @@ export const useGetUserInfo = () => {
     return useQuery({
         queryKey: [...QUERY_KEY.user],
         queryFn: async () => {
-            const res = await getUserInfo();
-            const userData = res as IUserModel;
+            const { data } = await getUserInfo();
+            const userData = data as IUserModel;
             return {
                 userName: userData.user_name,
                 userId: userData._id,
