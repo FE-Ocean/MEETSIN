@@ -1,3 +1,8 @@
+export interface ResponseDto<T = any> {
+    data: T;
+    message?: string;
+}
+
 export interface SuccessResponse<T> {
     statusCode: number;
     data: T;
