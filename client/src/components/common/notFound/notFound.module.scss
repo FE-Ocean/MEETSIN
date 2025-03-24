@@ -20,6 +20,7 @@
         color: $warning-red;
     }
     .buttons {
-        margin-left: 79px;
+        display: flex;
+        justify-content: center;
     }
 }
