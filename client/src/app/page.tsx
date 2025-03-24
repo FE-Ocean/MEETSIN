@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "motion/react";
 import Button from "@/components/common/button/button";
 import useModal from "@/components/modal/hooks/useModal";
 import { LANDING_CONTENTS } from "@/constants/landing.const";
-import { motion, AnimatePresence } from "motion/react";
 import style from "./style.module.scss";
-import Image from "next/image";
 
 const Home = () => {
     const { onOpen } = useModal("login");
@@ -52,9 +52,11 @@ const Home = () => {
                             onMouseOver={stopCarousel}
                             onMouseLeave={startCarousel}
                         >
-                            <Image 
-                                src={LANDING_CONTENTS[currentIndex].image} 
-                                className={style.carousel_image} 
+                            <Image
+                                src={LANDING_CONTENTS[currentIndex].image}
+                                className={style.carousel_image}
+                                width={500}
+                                height={300}
                                 alt=""
                                 priority={currentIndex === 0}
                                 quality={75}

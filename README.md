@@ -22,21 +22,47 @@
 
 ### 맵 (원격 모임 공간)
 
-<img src="/client/public/landing/map.png" width="500px" alt="map"/>
+방에 입장해 게임처럼 맵을 자유롭게 돌아다녀 보세요. 다양한 공간을 탐험하며 새로운 경험을 느낄 수 있어요.
+
+<img src="https://github.com/user-attachments/assets/513ea9d0-fc6f-43fe-9283-d5bfe47d4271" width="600px" alt="맵"/>
 
 ### 타이머 및 푸시 알림
 
-<img src="/client/public/landing/timer.png" width="500px" alt="timer"/>
+타이머를 설정하면 방에 있는 모든 멤버와 함께 집중할 수 있어요.
+
+<img src="https://github.com/user-attachments/assets/4427c70f-18ef-42e5-9230-9fccdbe4a8c6" width="600px" alt="타이머"/>
+
+<br>시간이 끝나면 종료음과 푸시 알림을 보내드려요.
+
+<img src="https://github.com/user-attachments/assets/be5e965c-8472-46af-ae0d-00f69c442a45" width="300px" alt="알림"/>
+
+(MEETSIN 화면을 벗어난 경우에만 푸시 알림 전송)
+
+<br>
 
 ### 실시간 채팅
 
-<img src="/client/public/landing/chat.png" width="400px" alt="chat"/>
+실시간 채팅으로 멤버들과 소통해 보세요. 질문을 나누거나 아이디어를 공유하기에 딱 좋아요.
+
+<img src="https://github.com/user-attachments/assets/0999528a-9d92-45dc-85de-9044c7709606" width="600px" alt="채팅"/>
 
 ### 화면 공유
 
-<img src="/client/public/landing/screen.png" width="700px" alt="screen"/>
+**화면 공유하기**
 
-<br>
+화면을 공유하며 멤버들과 함께 문제를 해결해 보세요. 시각적인 자료로 학습 효과를 높일 수 있어요.
+
+<img src="https://github.com/user-attachments/assets/e147d359-ed64-4145-8528-8f9d89b13788" width="700px" alt="화면 공유하기"/>
+
+<br><br>
+
+**화면 공유 보기**
+
+다른 멤버가 화면을 공유하면 오른쪽 상단의 '화면 공유 보기' 버튼이 활성화돼요.
+
+<img src="https://github.com/user-attachments/assets/63c1da1c-3e74-4d84-883c-a04d3c7d77d3" width="700px" alt="화면 공유 보기"/>
+
+<br><br>
 
 ## 제작자
 
