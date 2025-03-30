@@ -8,7 +8,6 @@ import {
 } from "../repository/room.repository";
 import { IPatchRoom, IRoomModel } from "@/types/room.type";
 import { QUERY_KEY } from "@/constants/queryKey.const";
-import { IUser } from "@/types/user.type";
 
 interface ICreateRoom {
     roomNameInput: string;
@@ -25,7 +24,7 @@ export const useCreateRoom = () => {
         };
     };
 
-    return useMutation({ 
+    return useMutation({
         mutationFn: formatRoomData,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: QUERY_KEY.rooms });
@@ -41,21 +40,22 @@ export const useGetRoomData = (roomId: string) => {
             roomName: res.room_name,
             admin: res.admin,
             createdAt: res.created_at,
-            userIds: res.userIds.map((user) => {
-                return {
-                    userName: user.user_name,
-                    userId: user._id,
-                    profileImg: user.profile_img,
-                    email: user.email,
-                } as IUser;
-            }),
         };
     };
 
-    return useQuery({ queryKey: QUERY_KEY.room(roomId), queryFn: formatRoomData });
+    return useQuery({
+        queryKey: QUERY_KEY.room(roomId),
+        queryFn: formatRoomData,
+        retry: 0,
+        staleTime: 1000 * 60 * 5,
+        cacheTime: 1000 * 60 * 10,
+        refetchOnWindowFocus: false,
+        enabled: !!roomId,
+        initialData: undefined,
+    });
 };
 
-export const usePatchRoomData = () => {
+export const usePatchRoomData = (roomId: string) => {
     const queryClient = useQueryClient();
     const formatRoomData = async ({ roomName, roomId }: IPatchRoom) => {
         const res = (await patchRoom({ roomName, roomId })) as IRoomModel;
@@ -70,9 +70,8 @@ export const usePatchRoomData = () => {
     return useMutation({
         mutationFn: formatRoomData,
         onSuccess: () => {
-            queryClient.invalidateQueries({ 
-                queryKey: QUERY_KEY.rooms,
-            });
+            queryClient.invalidateQueries({ queryKey: QUERY_KEY.rooms });
+            queryClient.refetchQueries({ queryKey: QUERY_KEY.room(roomId) });
         },
     });
 };
@@ -84,7 +83,6 @@ export const formatRoomsData = async (accessToken?: string) => {
         roomName: room.room_name,
         admin: room.admin,
         createdAt: room.created_at,
-        userIds: room.userIds,
     }));
 };
 

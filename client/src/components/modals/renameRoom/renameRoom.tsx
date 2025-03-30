@@ -16,7 +16,7 @@ const RenameRoom = ({ onClose }: IModal) => {
 
     const { data } = useGetRoomData(roomId);
 
-    const { mutate } = usePatchRoomData();
+    const { mutate } = usePatchRoomData(roomId);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
