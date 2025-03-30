@@ -1,0 +1,26 @@
+@import "../../../styles/variables";
+
+.main {
+    position: relative;
+    height: 100vh;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    .strong {
+        display: block;
+        margin: 20px 0px 15px 0px;
+        font-size: 18px;
+        font-weight: 700;
+        color: $warning-red;
+    }
+    .buttons {
+        display: flex;
+        justify-content: center;
+    }
+}
