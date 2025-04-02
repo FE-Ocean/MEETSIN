@@ -73,21 +73,26 @@ export const useCreateSubscriptionToDB = () => {
     return useMutation({
         mutationFn: async ({ subscription }: { subscription: PushSubscription }) => {
             const subscriptionObject = await formatSubscription(subscription);
-            return await createSubscriptionToDB(subscriptionObject);
+            const { data } = await createSubscriptionToDB(subscriptionObject);
+            return data;
         },
     });
 };
 
 export const useDeleteSubscriptionFromDB = () => {
     return useMutation({
-        mutationFn: () => deleteSubscriptionFromDB(),
+        mutationFn: async () => {
+            const { data } = await deleteSubscriptionFromDB();
+            return data;
+        },
     });
 };
 
 export const useCreatePushNotification = () => {
     return useMutation({
         mutationFn: async ({ userIds }: { userIds: string[] }) => {
-            return await createPushNotification(userIds);
+            const { data } = await createPushNotification(userIds);
+            return data;
         },
     });
 };
