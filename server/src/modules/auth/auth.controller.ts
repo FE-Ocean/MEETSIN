@@ -5,6 +5,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { LoginRequest } from "src/common/types/request.type";
 import { JwtGuard } from "../../common/guards/auth.guard";
 import { UsersService } from "src/modules/users/users.service";
+import { ResponseDto } from "src/common/interfaces/response.interface";
 
 @Controller("auth")
 export class AuthController {
@@ -35,7 +36,7 @@ export class AuthController {
     async googleAuthRedirect(@Req() req: LoginRequest, @Res() res: Response) {
         const { access_token } = await this.authService.signIn(req, res);
         res.cookie("access_token", access_token, this.cookieOptions);
-        res.redirect(process.env.CLIENT_URL);
+        res.status(302).redirect(process.env.CLIENT_URL);
     }
 
     @Get("/login/kakao")
@@ -47,24 +48,29 @@ export class AuthController {
     async kakaoAuthRedirect(@Req() req: LoginRequest, @Res() res: Response) {
         const { access_token } = await this.authService.signIn(req, res);
         res.cookie("access_token", access_token, this.cookieOptions);
-        res.redirect(process.env.CLIENT_URL);
+        res.status(302).redirect(process.env.CLIENT_URL);
     }
 
-    // 토큰으로 유저 정보 가져오기
     @Get("/user")
     @UseGuards(JwtGuard)
-    async login(@Req() req: LoginRequest, @Res() res: Response) {
-        const user = this.userService.entityToDto(req.user);
-        res.json(user);
+    async login(@Req() req: LoginRequest): Promise<ResponseDto> {
+        const userData = this.userService.entityToDto(req.user);
+        return {
+            data: userData,
+            message: "사용자 정보 조회 성공"
+        };
     }
 
     @Post("/logout")
-    logout(@Req() req, @Res() res: Response) {
+    logout(@Req() req, @Res({ passthrough: true }) res: Response): ResponseDto {
         res.clearCookie("access_token", {
             ...this.cookieOptions,
             expires: new Date(0),
             maxAge: 0,
         });
-        return res.status(200).send({ message: "로그아웃 성공" });
+        return {
+            data: null,
+            message: "로그아웃 성공"
+        };
     }
 }

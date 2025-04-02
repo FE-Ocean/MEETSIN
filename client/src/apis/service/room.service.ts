@@ -16,11 +16,11 @@ interface ICreateRoom {
 export const useCreateRoom = () => {
     const queryClient = useQueryClient();
     const formatRoomData = async ({ roomNameInput }: ICreateRoom) => {
-        const res = await createRoom(roomNameInput);
+        const { data } = await createRoom(roomNameInput);
         return {
-            roomId: res._id,
-            roomName: res.room_name,
-            admin: res.admin,
+            roomId: data._id,
+            roomName: data.room_name,
+            admin: data.admin,
         };
     };
 
@@ -34,12 +34,12 @@ export const useCreateRoom = () => {
 
 export const useGetRoomData = (roomId: string) => {
     const formatRoomData = async () => {
-        const res = (await getRoomInfo(roomId)) as IRoomModel;
+        const { data } = await getRoomInfo(roomId) as { data: IRoomModel };
         return {
-            id: res._id,
-            roomName: res.room_name,
-            admin: res.admin,
-            createdAt: res.created_at,
+            id: data._id,
+            roomName: data.room_name,
+            admin: data.admin,
+            createdAt: data.created_at,
         };
     };
 
@@ -58,12 +58,12 @@ export const useGetRoomData = (roomId: string) => {
 export const usePatchRoomData = (roomId: string) => {
     const queryClient = useQueryClient();
     const formatRoomData = async ({ roomName, roomId }: IPatchRoom) => {
-        const res = (await patchRoom({ roomName, roomId })) as IRoomModel;
+        const { data } = await patchRoom({ roomName, roomId }) as { data: IRoomModel };
         return {
-            id: res._id,
-            roomName: res.room_name,
-            admin: res.admin,
-            createdAt: res.created_at,
+            id: data._id,
+            roomName: data.room_name,
+            admin: data.admin,
+            createdAt: data.created_at,
         };
     };
 
@@ -77,8 +77,8 @@ export const usePatchRoomData = (roomId: string) => {
 };
 
 export const formatRoomsData = async (accessToken?: string) => {
-    const res = (await getUserRooms(accessToken)) as IRoomModel[];
-    return res.map((room) => ({
+    const { data } = await getUserRooms(accessToken) as { data: IRoomModel[] };
+    return data.map((room) => ({
         id: room._id,
         roomName: room.room_name,
         admin: room.admin,

@@ -5,6 +5,10 @@ interface FetchClientOptions {
     config: RequestInit;
 }
 
+interface ApiResponse<T> {
+    data: T;
+}
+
 export class FetchClient {
     constructor(private baseURL: string, private config: RequestInit = {}) {}
 
@@ -12,7 +16,7 @@ export class FetchClient {
         return new FetchClient(options.baseURL, options.config);
     }
 
-    public get<T>(path: string, config: RequestInit = {}): Promise<T> {
+    public get<T>(path: string, config: RequestInit = {}): Promise<ApiResponse<T>> {
         return this.request<T>(path, { ...config, method: "GET" });
     }
 
@@ -20,12 +24,12 @@ export class FetchClient {
         path: string,
         body?: BodyInit | Record<string, unknown>,
         config: RequestInit = {},
-    ): Promise<T> {
+    ): Promise<ApiResponse<T>> {
         const requestBody = body instanceof FormData ? body : JSON.stringify(body);
         return this.request<T>(path, { ...config, method: "POST", body: requestBody });
     }
 
-    public delete<T>(path: string, config: RequestInit = {}): Promise<T> {
+    public delete<T>(path: string, config: RequestInit = {}): Promise<ApiResponse<T>> {
         return this.request<T>(path, { ...config, method: "DELETE" });
     }
 
@@ -33,12 +37,12 @@ export class FetchClient {
         path: string,
         body: BodyInit | Record<string, unknown>,
         config: RequestInit = {},
-    ): Promise<T> {
+    ): Promise<ApiResponse<T>> {
         const requestBody = body instanceof FormData ? body : JSON.stringify(body);
         return this.request<T>(path, { ...config, method: "PATCH", body: requestBody });
     }
 
-    protected async request<T>(path: string, config: RequestInit): Promise<T> {
+    protected async request<T>(path: string, config: RequestInit): Promise<ApiResponse<T>> {
         const url = this.baseURL + path;
 
         const headers = {
