@@ -16,7 +16,7 @@ export const getUserRooms = async (accessToken?: string) => {
 };
 
 export const createRoom = async (roomNameInput: string) => {
-    return await baseClient.post<ICreateRoomResponse>("/rooms", {
+    return await baseClient.post<IRoomModel>("/rooms", {
         roomData: { roomName: roomNameInput },
     });
 };

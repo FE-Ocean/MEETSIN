@@ -2,17 +2,18 @@
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { useAtomValue } from "jotai";
 import { screenShareStateAtom } from "@/jotai/atom";
 import Chat from "@/components/chat/chat";
 import Menu from "@/components/menu/menu";
 import ScreenWindow from "@/components/screen/window/screenWindow";
 import Skeleton from "@/components/common/skeleton/skeleton";
+import ViewSwitchButton from "@/components/buttons/viewSwitch/viewSwitchButton";
+import RoomGradientBackground from "@/components/background/room/roomGradientBackground";
 import useChatSocket from "@/app/room/[roomId]/hooks/useChatSocket";
 import { useScreenShare } from "./hooks/useScreenShare";
-import ViewSwitchButton from "@/components/buttons/viewSwitch/viewSwitchButton";
 import { IScreenShareState } from "@/types/peer.type";
-import RoomGradientBackground from "@/components/background/room/roomGradientBackground";
 import { useGetRoomData } from "@/apis/service/room.service";
 import style from "./style.module.scss";
 
@@ -29,11 +30,15 @@ const Room = () => {
 
     const params = useParams();
     const roomId = params.roomId as string;
-    const { data } = useGetRoomData(roomId);
+    const { data, isError } = useGetRoomData(roomId);
 
     const { roomUsers, messages } = useChatSocket({ roomId });
     const { currentPeers, startScreenShare, stopScreenShare, setPeerId, setCurrentPeers } =
         useScreenShare(roomId);
+
+    if (isError) {
+        notFound();
+    }
 
     const toggleChat = (shouldClose?: boolean) => {
         setChatOpen((prev) => (shouldClose ? false : !prev));
