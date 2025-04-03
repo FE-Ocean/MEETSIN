@@ -2,15 +2,21 @@
 "use client";
 
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
-import { isServer, QueryClient, QueryClientProvider, QueryCache, MutationCache } from "@tanstack/react-query";
+import {
+    isServer,
+    QueryClient,
+    QueryClientProvider,
+    QueryCache,
+    MutationCache,
+} from "@tanstack/react-query";
 
 const handleError = (error: unknown) => {
     if (error instanceof Error) {
-      window.alert(error.message);
+        window.alert(error.message);
     } else {
-      window.alert('알 수 없는 오류가 발생했습니다.');
+        window.alert("알 수 없는 오류가 발생했습니다.");
     }
-  };
+};
 
 function makeQueryClient() {
     return new QueryClient({
