@@ -6,6 +6,7 @@ import NewQueryProviders from "@/query/newQueryProvider";
 import Analysis from "./analysis";
 import "../styles/reset.css";
 import "../styles/global.scss";
+import { GoogleAnalytics } from "./googleAnalytics";
 
 const noto_Sans_KR = Noto_Sans_KR({ weight: ["400", "700"], subsets: ["latin"] });
 
@@ -35,6 +36,9 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <html lang="ko">
+            <head>
+                <GoogleAnalytics />
+            </head>
             <body className={noto_Sans_KR.className}>
                 <NewQueryProviders>
                     <JotaiProvider>
