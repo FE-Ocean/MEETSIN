@@ -53,7 +53,11 @@ export class AuthController {
 
     @Get("/login/guest")
     loginAsGuest(@Req() req, @Res() res) {
-        res.cookie("access_token", process.env.GUEST_ACCESS_TOKEN, this.cookieOptions);
+        const guestCookieOptions = {
+            ...this.cookieOptions,
+            maxAge: 24 * 60 * 60 * 1000,
+        }
+        res.cookie("access_token", process.env.GUEST_ACCESS_TOKEN, guestCookieOptions);
         res.status(302).redirect(process.env.CLIENT_URL);
     }
 
