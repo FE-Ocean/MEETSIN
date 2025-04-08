@@ -10,8 +10,26 @@ import "../styles/global.scss";
 const noto_Sans_KR = Noto_Sans_KR({ weight: ["400", "700"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "MEETSIN",
-    description: "실시간 소통과 맵 탐험을 한 번에 즐겨보세요.",
+    metadataBase: new URL("https://meetsin.link"),
+    title: {
+        template: "%s | MEETSIN",
+        default: "MEETSIN",
+    },
+    description: "스터디 및 협업을 위한 메타버스 플랫폼",
+    openGraph: {
+        type: "website",
+        images: [
+            {
+                url: "/images/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "MEETSIN",
+            }
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+    },
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
