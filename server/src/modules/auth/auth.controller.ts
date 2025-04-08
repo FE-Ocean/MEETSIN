@@ -51,6 +51,12 @@ export class AuthController {
         res.status(302).redirect(process.env.CLIENT_URL);
     }
 
+    @Get("/login/guest")
+    loginAsGuest(@Req() req, @Res() res) {
+        res.cookie("access_token", process.env.GUEST_ACCESS_TOKEN, this.cookieOptions);
+        res.status(302).redirect(process.env.CLIENT_URL);
+    }
+
     @Get("/user")
     @UseGuards(JwtGuard)
     async login(@Req() req: LoginRequest): Promise<ResponseDto> {
