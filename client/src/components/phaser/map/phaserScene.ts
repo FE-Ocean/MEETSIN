@@ -5,7 +5,7 @@ import { SocketManager } from "./managers/socketManager";
 import { InputManager } from "./managers/inputManager";
 import { ConfigManager } from "./managers/configManager";
 import { MIN_ZOOM_LEVEL } from "@/constants/zoomLevel.const";
-import { Direction, PlayerContainerType } from "@/types/phaser.type";
+import { Direction, IDirection, PlayerContainerType } from "@/types/phaser.type";
 
 export class MeetsInPhaserScene extends Scene {
     public zoomLevel: number = MIN_ZOOM_LEVEL;
@@ -106,27 +106,27 @@ export class MeetsInPhaserScene extends Scene {
         if (!this.currentPlayer) return;
 
         (this.currentPlayer.body as Phaser.Physics.Arcade.Body).setVelocity(0);
-        if (direction === "left") {
-            this.movePlayerInDirection("left", -this.VELOCITY, 0);
+        if (direction === Direction.LEFT) {
+            this.movePlayerInDirection(Direction.LEFT, -this.VELOCITY, 0);
             return;
         }
 
-        if (direction === "right") {
-            this.movePlayerInDirection("right", this.VELOCITY, 0);
+        if (direction === Direction.RIGHT) {
+            this.movePlayerInDirection(Direction.RIGHT, this.VELOCITY, 0);
             return;
         }
 
-        if (direction === "down") {
-            this.movePlayerInDirection("down", 0, this.VELOCITY);
+        if (direction === Direction.DOWN) {
+            this.movePlayerInDirection(Direction.DOWN, 0, this.VELOCITY);
             return;
         }
 
-        if (direction === "up") {
-            this.movePlayerInDirection("up", 0, -this.VELOCITY);
+        if (direction === Direction.UP) {
+            this.movePlayerInDirection(Direction.UP, 0, -this.VELOCITY);
             return;
         }
 
-        if (direction === null) {
+        if (direction === Direction.NULL) {
             const playerSprite = this.currentPlayer?.playerSprite;
 
             // 현재 애니메이션 키 가져오기
@@ -144,7 +144,7 @@ export class MeetsInPhaserScene extends Scene {
     }
 
     private movePlayerInDirection(
-        direction: Direction,
+        direction: IDirection,
         velocityX: number = 0,
         velocityY: number = 0,
     ) {

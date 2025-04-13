@@ -1,5 +1,5 @@
 import { MeetsInPhaserScene } from "../phaserScene";
-import { Direction, EtcKeyboardInputType } from "@/types/phaser.type";
+import { Direction, EtcKeyboardInputType, IDirection } from "@/types/phaser.type";
 
 export class InputManager {
     private scene: MeetsInPhaserScene;
@@ -13,23 +13,23 @@ export class InputManager {
         this.etcKeyboardInput = keyboard.addKeys("W,A,S,D") as EtcKeyboardInputType;
     }
 
-    getCurrentDirection(): Direction {
+    getCurrentDirection(): IDirection {
         if (this.keyboardInput.left.isDown || this.etcKeyboardInput?.A.isDown) {
-            return "left";
+            return Direction.LEFT;
         }
 
         if (this.keyboardInput.right.isDown || this.etcKeyboardInput?.D.isDown) {
-            return "right";
+            return Direction.RIGHT;
         }
 
         if (this.keyboardInput.up.isDown || this.etcKeyboardInput?.W.isDown) {
-            return "up";
+            return Direction.UP;
         }
 
         if (this.keyboardInput.down.isDown || this.etcKeyboardInput?.S.isDown) {
-            return "down";
+            return Direction.DOWN;
         }
-        return null;
+        return Direction.NULL;
     }
 
     isAnyCursorKeyDown(): boolean {
