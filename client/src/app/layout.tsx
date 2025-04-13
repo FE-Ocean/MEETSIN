@@ -3,7 +3,7 @@ import { Noto_Sans_KR } from "next/font/google";
 import JotaiProvider from "@/jotai/jotaiProvider";
 import ModalProvider from "@/components/modal/modalProvider/modalProvider";
 import NewQueryProviders from "@/query/newQueryProvider";
-import Analysis from "./analysis";
+import MsClarity from "./msClarity";
 import "../styles/reset.css";
 import "../styles/global.scss";
 import { GoogleAnalytics } from "./googleAnalytics";
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
                 width: 1200,
                 height: 630,
                 alt: "MEETSIN",
-            }
+            },
         ],
     },
     twitter: {
@@ -44,7 +44,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                     <JotaiProvider>
                         <ModalProvider>
                             {children}
-                            <Analysis />
+                            <MsClarity />
                         </ModalProvider>
                     </JotaiProvider>
                 </NewQueryProviders>
