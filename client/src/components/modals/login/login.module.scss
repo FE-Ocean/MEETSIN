@@ -2,8 +2,8 @@
 @import "../../../styles/mixin";
 
 .login_modal {
-    @include modal_container(400px, 270px);
-    padding: 32px;
+    @include modal_container(410px, 306px);
+    padding: 32px 40px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

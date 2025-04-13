@@ -1,6 +1,6 @@
 import Script from "next/script";
 
-export const Analysis = () => {
+export const MsClarity = () => {
     return (
         <Script
             id="microsoft-clarity-init"
@@ -18,4 +18,4 @@ export const Analysis = () => {
     );
 };
 
-export default Analysis;
+export default MsClarity;
