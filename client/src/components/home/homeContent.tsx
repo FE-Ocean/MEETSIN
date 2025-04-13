@@ -57,7 +57,7 @@ const HomeContent = () => {
                                 width={500}
                                 height={300}
                                 alt=""
-                                priority={currentIndex === 0}
+                                priority
                                 quality={75}
                             />
                             <div className={style.carousel_text}>
