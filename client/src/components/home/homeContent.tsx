@@ -5,11 +5,10 @@ import { motion, AnimatePresence } from "motion/react";
 import Button from "@/components/common/button/button";
 import useModal from "@/components/modal/hooks/useModal";
 import { LANDING_CONTENTS } from "@/constants/landing.const";
-import style from "./style.module.scss";
+import style from "../../app/style.module.scss";
 
-const Home = () => {
+const HomeContent = () => {
     const { onOpen } = useModal("login");
-
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const intervalRef = useRef<NodeJS.Timeout>();
@@ -90,4 +89,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HomeContent;
