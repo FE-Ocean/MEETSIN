@@ -126,7 +126,7 @@ export class MeetsInPhaserScene extends Scene {
             return;
         }
 
-        if (direction === Direction.NULL) {
+        if (direction === null) {
             const playerSprite = this.currentPlayer?.playerSprite;
 
             // 현재 애니메이션 키 가져오기

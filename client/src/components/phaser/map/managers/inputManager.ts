@@ -13,7 +13,7 @@ export class InputManager {
         this.etcKeyboardInput = keyboard.addKeys("W,A,S,D") as EtcKeyboardInputType;
     }
 
-    getCurrentDirection(): IDirection {
+    getCurrentDirection(): IDirection | null {
         if (this.keyboardInput.left.isDown || this.etcKeyboardInput?.A.isDown) {
             return Direction.LEFT;
         }
@@ -29,7 +29,7 @@ export class InputManager {
         if (this.keyboardInput.down.isDown || this.etcKeyboardInput?.S.isDown) {
             return Direction.DOWN;
         }
-        return Direction.NULL;
+        return null;
     }
 
     isAnyCursorKeyDown(): boolean {
