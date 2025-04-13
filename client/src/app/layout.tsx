@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
+import localFont from "next/font/local";
 import JotaiProvider from "@/jotai/jotaiProvider";
 import ModalProvider from "@/components/modal/modalProvider/modalProvider";
 import NewQueryProviders from "@/query/newQueryProvider";
@@ -9,6 +10,13 @@ import "../styles/global.scss";
 import { GoogleAnalytics } from "./googleAnalytics";
 
 const noto_Sans_KR = Noto_Sans_KR({ weight: ["400", "700"], subsets: ["latin"] });
+
+const timer = localFont({
+    src: "../styles/timer.woff2",
+    display: "swap",
+    preload: true,
+    variable: "--font-timer",
+});
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://meetsin.link"),
@@ -39,7 +47,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <head>
                 <GoogleAnalytics />
             </head>
-            <body className={noto_Sans_KR.className}>
+            <body className={`${noto_Sans_KR.className} ${timer.variable}`}>
                 <NewQueryProviders>
                     <JotaiProvider>
                         <ModalProvider>

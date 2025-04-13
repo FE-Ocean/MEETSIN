@@ -1,11 +1,5 @@
 @import "../../../styles/variables";
 @import "../../../styles/mixin";
-@font-face {
-    font-family: "timer_font";
-    src: url("/timer.woff2") format("woff2");
-    font-weight: normal;
-    font-style: normal;
-}
 
 .modal_container {
     @include modal_container;
@@ -28,7 +22,7 @@
 .time_section {
     position: relative;
     padding: 23px 0 23px;
-    font-family: "timer_font";
+    font-family: var(--font-timer);
     font-size: 72px;
 }
 .placeholder {
