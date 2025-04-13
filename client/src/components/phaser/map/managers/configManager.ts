@@ -55,7 +55,6 @@ export class ConfigManager {
         this.scene.layerBlockOutdoor.setCollisionByExclusion([-1]);
         this.scene.layerBlockWall.setCollisionByExclusion([-1]);
         this.scene.layerBlockFurniture.setCollisionByExclusion([-1]);
-        this.scene.cameras.main.setZoom(2);
     }
 
     setupCollisions(players: Phaser.Physics.Arcade.Sprite[]): void {

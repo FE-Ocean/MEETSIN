@@ -38,18 +38,17 @@ export class MeetsInPhaserScene extends Scene {
         this.roomId = roomId;
         this.socket = socket;
         this.isChatFocused = false;
+        this.configManager = new ConfigManager(this);
     }
 
     preload(): void {
-        this.initLoad();
+        this.configManager.initLoad();
     }
 
     create(): void {
-        // 매니저 초기화
         this.playerManager = new PlayerManager(this);
         this.socketManager = new SocketManager(this.socket, this, this.roomId);
         this.inputManager = new InputManager(this);
-        this.configManager = new ConfigManager(this);
 
         // 소켓 이벤트 설정
         this.socketManager.setupSocketEvents();
@@ -161,18 +160,5 @@ export class MeetsInPhaserScene extends Scene {
             velocityX,
             velocityY,
         });
-    }
-
-    private initLoad(): void {
-        this.load.image("base", "/map/base.png");
-        this.load.image("indoor", "/map/indoor.png");
-        this.load.image("urban", "/map/urban.png");
-        this.load.tilemapTiledJSON("map", "/map/map.json");
-        for (let i = 1; i <= 6; i++) {
-            this.load.spritesheet(`player${i}`, `/players/player${i}.png`, {
-                frameWidth: 16,
-                frameHeight: 16,
-            });
-        }
     }
 }
