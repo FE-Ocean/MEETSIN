@@ -1,20 +1,20 @@
-import { ISubscription } from "./subscription.type";
+import { Subscription } from "./subscription.type";
 
 // 뷰 모델
-export interface IUser {
+export interface User {
     userId: string;
     userName: string;
     profileImg: string;
     email: string;
-    notification?: ISubscription[];
+    notification?: Subscription[];
 }
 
 // 서버의 응답 모델
-export interface IUserModel {
+export interface UserModel {
     // user_id: string
     _id: string;
     user_name: string;
     profile_img: string;
     email: string;
-    notification?: ISubscription[];
+    notification?: Subscription[];
 }

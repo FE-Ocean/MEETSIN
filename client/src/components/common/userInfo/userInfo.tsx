@@ -5,12 +5,12 @@ import UserButton from "./userButton/userButton";
 import UserMenu from "./userMenu/userMenu";
 import style from "./userInfo.module.scss";
 
-interface IUserInfo {
+interface Props {
     direction?: "top" | "bottom";
     className?: string;
 }
 
-const UserInfo = (props: IUserInfo) => {
+const UserInfo = (props: Props) => {
     const { direction = "top", className } = props;
 
     const [menuOpen, setMenuOpen] = useState(false);

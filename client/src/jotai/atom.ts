@@ -1,17 +1,14 @@
 import { atom } from "jotai";
-import { IScreenShareState } from "@/types/peer.type";
+import { ScreenShareState } from "@/types/peer.type";
 import { MIN_ZOOM_LEVEL } from "@/constants/zoomLevel.const";
 
-interface IModalAtom {
+interface ModalAtom {
     [fileName: string]: {
         open: boolean;
     };
 }
 
-export const modalAtom = atom<IModalAtom>({
-    testModal: {
-        open: false,
-    },
+export const modalAtom = atom<ModalAtom>({
     login: {
         open: false,
     },
@@ -24,7 +21,7 @@ export const timerAtom = atom({
 
 export const isTimerVisibleAtom = atom(false);
 
-export const screenShareStateAtom = atom<IScreenShareState>(IScreenShareState.NOT_SHARING);
+export const screenShareStateAtom = atom<ScreenShareState>(ScreenShareState.NOT_SHARING);
 
 export const roomIdAtom = atom("");
 

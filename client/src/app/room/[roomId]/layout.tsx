@@ -2,11 +2,11 @@ import { Metadata } from "next";
 import { getRoomInfo } from "@/apis/repository/room.repository";
 import { getToken } from "@/utils/getToken.utill";
 
-interface IProps {
+interface Props {
     params: { roomId: string };
 }
 
-export const generateMetadata = async ({ params }: IProps): Promise<Metadata> => {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
     const accessToken = getToken();
     const { data: roomData } = await getRoomInfo(params.roomId, accessToken);
 

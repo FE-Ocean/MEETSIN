@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IRoom } from "@/types/room.type";
+import { Room } from "@/types/room.type";
 import { useSetAtom } from "jotai";
 import { roomIdAtom } from "@/jotai/atom";
 import useModal from "@/components/modal/hooks/useModal";
@@ -12,7 +12,7 @@ const ROOM_ACTION = {
 
 type ROOM_ACTION_TYPE = keyof typeof ROOM_ACTION;
 
-const RoomCard = ({ room }: { room: IRoom }) => {
+const RoomCard = ({ room }: { room: Room }) => {
     const { id, roomName, createdAt } = room;
     const created = createdAt.slice(0, 10) + " 개설";
 

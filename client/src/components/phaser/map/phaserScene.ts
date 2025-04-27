@@ -5,7 +5,7 @@ import { SocketManager } from "./managers/socketManager";
 import { InputManager } from "./managers/inputManager";
 import { ConfigManager } from "./managers/configManager";
 import { MIN_ZOOM_LEVEL } from "@/constants/zoomLevel.const";
-import { Direction, IDirection, PlayerContainerType } from "@/types/phaser.type";
+import { DIRECTION, Direction, PlayerContainerType } from "@/types/phaser.type";
 
 export class MeetsInPhaserScene extends Scene {
     public zoomLevel: number = MIN_ZOOM_LEVEL;
@@ -105,23 +105,23 @@ export class MeetsInPhaserScene extends Scene {
         if (!this.currentPlayer) return;
 
         (this.currentPlayer.body as Phaser.Physics.Arcade.Body).setVelocity(0);
-        if (direction === Direction.LEFT) {
-            this.movePlayerInDirection(Direction.LEFT, -this.VELOCITY, 0);
+        if (direction === DIRECTION.left) {
+            this.movePlayerInDirection(DIRECTION.left, -this.VELOCITY, 0);
             return;
         }
 
-        if (direction === Direction.RIGHT) {
-            this.movePlayerInDirection(Direction.RIGHT, this.VELOCITY, 0);
+        if (direction === DIRECTION.right) {
+            this.movePlayerInDirection(DIRECTION.right, this.VELOCITY, 0);
             return;
         }
 
-        if (direction === Direction.DOWN) {
-            this.movePlayerInDirection(Direction.DOWN, 0, this.VELOCITY);
+        if (direction === DIRECTION.down) {
+            this.movePlayerInDirection(DIRECTION.down, 0, this.VELOCITY);
             return;
         }
 
-        if (direction === Direction.UP) {
-            this.movePlayerInDirection(Direction.UP, 0, -this.VELOCITY);
+        if (direction === DIRECTION.up) {
+            this.movePlayerInDirection(DIRECTION.up, 0, -this.VELOCITY);
             return;
         }
 
@@ -143,7 +143,7 @@ export class MeetsInPhaserScene extends Scene {
     }
 
     private movePlayerInDirection(
-        direction: IDirection,
+        direction: Direction,
         velocityX: number = 0,
         velocityY: number = 0,
     ) {

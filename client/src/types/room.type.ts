@@ -1,18 +1,18 @@
-export interface IRoom {
+export interface Room {
     id: string;
     roomName: string;
     admin: string;
     createdAt: string;
 }
 
-export interface IRoomModel {
+export interface RoomModel {
     _id: string;
     room_name: string;
     admin: string;
     created_at: string;
 }
 
-export interface IPatchRoom {
+export interface PatchRoom {
     roomName: string;
     roomId: string;
 }

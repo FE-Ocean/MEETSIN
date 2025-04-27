@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUserInfo, logout } from "../repository/user.repository";
-import { IUser } from "@/types/user.type";
+import { User } from "@/types/user.type";
 import { QUERY_KEY } from "@/constants/queryKey.const";
 
 export const useGetUserInfo = () => {
@@ -13,7 +13,7 @@ export const useGetUserInfo = () => {
                 userId: data._id,
                 profileImg: data.profile_img,
                 email: data.email,
-            } as IUser;
+            } as User;
         },
     });
 };

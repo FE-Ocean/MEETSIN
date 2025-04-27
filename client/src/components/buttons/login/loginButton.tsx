@@ -5,11 +5,11 @@ import Image from "next/image";
 import { SOCIAL_LOGIN, SOCIAL_LOGIN_TYPE } from "@/constants/login.const";
 import style from "./loginButton.module.scss";
 
-interface IProps {
+interface Props {
     loginType: SOCIAL_LOGIN_TYPE;
 }
 
-const LoginButton = ({ loginType }: IProps) => {
+const LoginButton = ({ loginType }: Props) => {
     const login = async (loginType: SOCIAL_LOGIN_TYPE) => {
         window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login/${loginType}`;
     };

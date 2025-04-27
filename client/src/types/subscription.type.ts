@@ -1,9 +1,9 @@
-interface Ikeys {
+interface Keys {
     p256dh: string;
     auth: string;
 }
 
-export interface ISubscription {
+export interface Subscription {
     endpoint: string;
-    keys: Ikeys;
+    keys: Keys;
 }
