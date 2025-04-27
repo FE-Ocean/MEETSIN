@@ -40,7 +40,7 @@ const Map = () => {
         phaserSocket.on("connect", () => {
             gameRef.current = new Phaser.Game({
                 ...phaserConfig,
-                scene: new MeetsInPhaserScene(roomId, user, phaserSocket),
+                scene: new MeetsInPhaserScene(roomId as string, phaserSocket),
             });
         });
 
@@ -61,6 +61,7 @@ const Map = () => {
             const scene = gameRef.current.scene.getScene(
                 "MeetsInPhaserScene",
             ) as MeetsInPhaserScene;
+
             if (scene) {
                 scene.setIsChatFocused(isChatFocused);
             }
