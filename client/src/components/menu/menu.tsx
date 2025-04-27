@@ -10,20 +10,20 @@ import NotificationSwitch from "./notificationSwitch/notificationSwitch";
 import UserInfo from "../common/userInfo/userInfo";
 import LinkCopyButton from "./linkCopyButton/linkCopyButton";
 import style from "./menu.module.scss";
-import { IRoomUser } from "@/types/chat.type";
+import { RoomUser } from "@/types/chat.type";
 import { roomSocket } from "@/socket";
-import { IScreenShareState } from "@/types/peer.type";
+import { ScreenShareState } from "@/types/peer.type";
 import { useEffect, useState } from "react";
 import RoomUserInfo from "./roomUserInfo/roomUserInfo";
 
-interface IMenu {
+interface Props {
     className: string;
     onScreenShare: () => any;
     toggleChat: () => void;
-    roomUsers: IRoomUser[];
+    roomUsers: RoomUser[];
 }
 
-const Menu = (props: IMenu) => {
+const Menu = (props: Props) => {
     const { className, onScreenShare, toggleChat, roomUsers } = props;
 
     const [roomUserInfoOpen, setRoomUserInfoOpen] = useState(false);
@@ -90,7 +90,7 @@ const Menu = (props: IMenu) => {
                     <li>
                         <button
                             className={`${style.screen_share} ${
-                                screenShareState === IScreenShareState.SELF_SHARING && style.active
+                                screenShareState === ScreenShareState.SELF_SHARING && style.active
                             }`}
                             onClick={onScreenShare}
                             aria-label="화면 공유하기"

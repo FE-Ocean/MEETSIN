@@ -4,7 +4,7 @@ import {
     deleteSubscriptionFromDB,
     createPushNotification,
 } from "../repository/notification.repository";
-import { ISubscription } from "@/types/subscription.type";
+import { Subscription } from "@/types/subscription.type";
 
 const getServiceWorkerStatus = async () => {
     return navigator.serviceWorker.ready;
@@ -46,7 +46,7 @@ export const startSubscription = async () => {
 
 const formatSubscription = async (subscription: PushSubscription) => {
     const { endpoint, keys } = subscription.toJSON();
-    const subscriptionObject: ISubscription = {
+    const subscriptionObject: Subscription = {
         endpoint: endpoint!,
         keys: {
             p256dh: keys!.p256dh,

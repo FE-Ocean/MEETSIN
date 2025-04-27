@@ -1,19 +1,29 @@
 import style from "./button.module.scss";
 import Image from "next/image";
 
-interface IProps {
-    type: "button" | "submit";
-    onClick?: () => void;
+interface Props {
+    type?: "button" | "submit";
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
     look: "solid" | "ghost";
     width?: number;
     text: string;
-    bold?: boolean
-    leftIcon?: string
-    rightIcon?: string
-    disabled?: boolean
+    bold?: boolean;
+    leftIcon?: string;
+    rightIcon?: string;
+    disabled?: boolean;
 }
 
-const Button = ({ type, onClick, look, width, text, bold, leftIcon, rightIcon, disabled }: IProps) => {
+const Button = ({
+    type = "button",
+    onClick,
+    look,
+    width,
+    text,
+    bold,
+    leftIcon,
+    rightIcon,
+    disabled,
+}: Props) => {
     return (
         <button
             type={type}
@@ -24,9 +34,13 @@ const Button = ({ type, onClick, look, width, text, bold, leftIcon, rightIcon, d
                 width: width ? `${width}px` : "auto",
             }}
         >
-            {leftIcon && <Image src={leftIcon} alt={text} width={18} height={18} className={style.icon}/>}
+            {leftIcon && (
+                <Image src={leftIcon} alt={text} width={18} height={18} className={style.icon} />
+            )}
             {text}
-            {rightIcon && <Image src={rightIcon} alt={text} width={18} height={18} className={style.icon}/>}
+            {rightIcon && (
+                <Image src={rightIcon} alt={text} width={18} height={18} className={style.icon} />
+            )}
         </button>
     );
 };

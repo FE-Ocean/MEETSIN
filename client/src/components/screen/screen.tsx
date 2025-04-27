@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import style from "./screen.module.scss";
 
-interface IProps {
-    currentStream: MediaStream
-    userName: string
+interface Props {
+    currentStream: MediaStream;
+    userName: string;
 }
 
-const Screen = ({ currentStream, userName }: IProps) => {
+const Screen = ({ currentStream, userName }: Props) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     useEffect(() => {
         if (videoRef && videoRef.current && currentStream) {

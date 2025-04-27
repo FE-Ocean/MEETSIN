@@ -6,11 +6,11 @@ import { BaseModal } from "@/components/modal/baseModal/baseModal";
 import Button from "@/components/common/button/button";
 import style from "./renameRoom.module.scss";
 
-interface IModal {
+interface Props {
     onClose: () => void;
 }
 
-const RenameRoom = ({ onClose }: IModal) => {
+const RenameRoom = ({ onClose }: Props) => {
     const roomId = useAtomValue(roomIdAtom);
     const roomNameRef = useRef<HTMLInputElement>({} as HTMLInputElement);
 

@@ -1,8 +1,8 @@
 import { baseClient } from "@/modules/fetchClient";
-import { ISubscription } from "@/types/subscription.type";
+import { Subscription } from "@/types/subscription.type";
 
-export const createSubscriptionToDB = async (subscription: ISubscription) => {
-    return await baseClient.post<ISubscription>("/notification", { notification: subscription });
+export const createSubscriptionToDB = async (subscription: Subscription) => {
+    return await baseClient.post<Subscription>("/notification", { notification: subscription });
 };
 
 export const deleteSubscriptionFromDB = async () => {

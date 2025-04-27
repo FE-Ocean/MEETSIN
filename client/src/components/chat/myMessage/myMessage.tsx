@@ -1,12 +1,12 @@
 import { formatTimeFromISO } from "@/utils";
 import style from "./myMessage.module.scss";
 
-interface IMessageProps {
+interface MessageProps {
     message: string;
     time: string;
 }
 
-const MyMessage = (props: IMessageProps) => {
+const MyMessage = (props: MessageProps) => {
     const { message, time } = props;
 
     return (

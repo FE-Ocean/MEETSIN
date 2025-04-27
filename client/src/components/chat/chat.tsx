@@ -4,16 +4,16 @@ import style from "./chat.module.scss";
 import MessageInput from "./messageInput/messageInput";
 import MessageList from "./messageList/messageList";
 import ScrollToBottom from "./scrollToBottom/scrollToBottom";
-import { IMessage } from "@/types/chat.type";
+import { Message } from "@/types/chat.type";
 
-interface IChatProps {
+interface ChatProps {
     className: string;
     toggleChat: (shouldClose?: boolean) => void;
-    messages: IMessage[];
+    messages: Message[];
     roomTitle: string;
 }
 
-const Chat = (props: IChatProps) => {
+const Chat = (props: ChatProps) => {
     const { className, toggleChat, messages, roomTitle } = props;
 
     return (

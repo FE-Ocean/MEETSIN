@@ -3,12 +3,12 @@
 import { useState } from "react";
 import style from "./linkCopyButton.module.scss";
 
-interface IProps {
+interface Props {
     disabledTime?: number;
     className?: string;
 }
 
-const LinkCopyButton = (props: IProps) => {
+const LinkCopyButton = (props: Props) => {
     const { disabledTime = 2000, className } = props;
 
     const [isCopied, setIsCopied] = useState(false);

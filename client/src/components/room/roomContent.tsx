@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 import { useAtomValue } from "jotai";
@@ -11,7 +11,7 @@ import Skeleton from "@/components/common/skeleton/skeleton";
 import useChatSocket from "@/app/room/[roomId]/hooks/useChatSocket";
 import { useScreenShare } from "@/app/room/[roomId]/hooks/useScreenShare";
 import ViewSwitchButton from "@/components/buttons/viewSwitch/viewSwitchButton";
-import { IScreenShareState } from "@/types/peer.type";
+import { ScreenShareState } from "@/types/peer.type";
 import RoomGradientBackground from "@/components/background/room/roomGradientBackground";
 import { useGetRoomData } from "@/apis/service/room.service";
 import style from "@/app/room/[roomId]/style.module.scss";
@@ -23,7 +23,6 @@ const PhaserMap = dynamic(() => import("../phaser/map/map"), {
 });
 
 const RoomContent = () => {
-    
     const screenShareState = useAtomValue(screenShareStateAtom);
 
     const [chatOpen, setChatOpen] = useState<boolean>(true);
@@ -50,19 +49,17 @@ const RoomContent = () => {
     };
 
     const handleScreenShare = () => {
-        screenShareState === IScreenShareState.SELF_SHARING
-            ? stopScreenShare()
-            : startScreenShare();
+        screenShareState === ScreenShareState.SELF_SHARING ? stopScreenShare() : startScreenShare();
     };
 
     const isScreenSharing = useMemo(() => {
-        return screenShareState !== IScreenShareState.NOT_SHARING;
+        return screenShareState !== ScreenShareState.NOT_SHARING;
     }, [screenShareState]);
 
     useEffect(() => {
-        if (screenShareState === IScreenShareState.SELF_SHARING) {
+        if (screenShareState === ScreenShareState.SELF_SHARING) {
             setMeetingView(true);
-        } else if (screenShareState === IScreenShareState.NOT_SHARING) {
+        } else if (screenShareState === ScreenShareState.NOT_SHARING) {
             setMeetingView(false);
         }
     }, [screenShareState]);
@@ -89,7 +86,6 @@ const RoomContent = () => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
 
     return (
         <>

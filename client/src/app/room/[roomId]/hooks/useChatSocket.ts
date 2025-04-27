@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGetUserInfo } from "@/apis/service/user.service";
 import { roomSocket } from "@/socket";
-import { IRoomUser, IMessage } from "@/types/chat.type";
+import { RoomUser, Message } from "@/types/chat.type";
 
 interface Params {
     roomId: string;
@@ -11,14 +11,14 @@ const useChatSocket = (params: Params) => {
     const { roomId } = params;
     const { data: user } = useGetUserInfo();
 
-    const [roomUsers, setRoomUsers] = useState<IRoomUser[]>([]);
-    const [messages, setMessages] = useState<IMessage[]>([]);
+    const [roomUsers, setRoomUsers] = useState<RoomUser[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
 
-    const handleNewMessage = (message: IMessage) => {
+    const handleNewMessage = (message: Message) => {
         setMessages((prev) => [...prev, message]);
     };
 
-    const handleRoomUsers = (users: IRoomUser[]) => {
+    const handleRoomUsers = (users: RoomUser[]) => {
         setRoomUsers(users);
     };
 

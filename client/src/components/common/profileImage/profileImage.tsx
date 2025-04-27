@@ -3,13 +3,13 @@ import Image from "next/image";
 import style from "./profileImage.module.scss";
 import { IMAGE_SIZE_TYPE } from "@/constants/imageSize.const";
 
-interface IProps {
+interface Props {
     src: string;
     alt?: string;
     size?: IMAGE_SIZE_TYPE;
 }
 
-const ProfileImage = ({ src, alt, size }: IProps) => {
+const ProfileImage = ({ src, alt, size }: Props) => {
     if (!size) {
         size = IMAGE_SIZE_TYPE.middle;
     }

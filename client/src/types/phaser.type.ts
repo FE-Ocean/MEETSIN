@@ -1,12 +1,11 @@
-export const Direction = {
-    LEFT: "left",
-    RIGHT: "right",
-    UP: "up",
-    DOWN: "down",
+export const DIRECTION = {
+    left: "left",
+    right: "right",
+    up: "up",
+    down: "down",
 } as const;
 
-export type IDirection = (typeof Direction)[keyof typeof Direction];
-
+export type Direction = (typeof DIRECTION)[keyof typeof DIRECTION];
 export interface PlayerInfo {
     x: number;
     y: number;
@@ -28,7 +27,7 @@ export interface SyncInfo {
     x: number;
     y: number;
     roomId: string;
-    direction: IDirection | null;
+    direction: Direction | null;
     playerId: string;
 }
 
@@ -36,7 +35,7 @@ export interface MoveInfo {
     body: Phaser.Physics.Arcade.Body;
     sprite: Phaser.Physics.Arcade.Sprite;
     characterId: string;
-    direction: IDirection | null;
+    direction: Direction | null;
     velocityX: number;
     velocityY: number;
 }

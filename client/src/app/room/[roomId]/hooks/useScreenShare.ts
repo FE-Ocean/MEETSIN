@@ -1,12 +1,12 @@
 import { useGetUserInfo } from "@/apis/service/user.service";
 import { screenShareStateAtom } from "@/jotai/atom";
-import { IPeer, IScreenShareState } from "@/types/peer.type";
+import { PeerData, ScreenShareState } from "@/types/peer.type";
 import { useAtom } from "jotai";
 import Peer from "peerjs";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 
 export const useScreenShare = (roomId: string) => {
-    const [currentPeers, setCurrentPeers] = useState<Map<string, IPeer>>(new Map());
+    const [currentPeers, setCurrentPeers] = useState<Map<string, PeerData>>(new Map());
     const peerRef = useRef<Peer | null>(null);
     const displayStreamRef = useRef<MediaStream | null>(null);
 
@@ -14,7 +14,7 @@ export const useScreenShare = (roomId: string) => {
     const [screenShareState, setScreenShareState] = useAtom(screenShareStateAtom);
 
     const updatePeers = useCallback(
-        (key: string, value: IPeer) => {
+        (key: string, value: PeerData) => {
             const tempPeerMap = new Map(currentPeers);
             tempPeerMap.set(key, value);
             setCurrentPeers(tempPeerMap);
@@ -123,11 +123,11 @@ export const useScreenShare = (roomId: string) => {
     useEffect(() => {
         console.log(screenShareState);
 
-        if (screenShareState !== IScreenShareState.SELF_SHARING) {
+        if (screenShareState !== ScreenShareState.SELF_SHARING) {
             if (isSomeoneSharing) {
-                setScreenShareState(IScreenShareState.SOMEONE_SHARING);
+                setScreenShareState(ScreenShareState.SOMEONE_SHARING);
             } else {
-                setScreenShareState(IScreenShareState.NOT_SHARING);
+                setScreenShareState(ScreenShareState.NOT_SHARING);
             }
         }
     }, [currentPeers, isSomeoneSharing, screenShareState, setScreenShareState]);
@@ -157,7 +157,7 @@ export const useScreenShare = (roomId: string) => {
                 };
             });
 
-            setScreenShareState(IScreenShareState.SELF_SHARING);
+            setScreenShareState(ScreenShareState.SELF_SHARING);
             // 방에 있는 사람들에게 연결
             currentPeers.forEach((p) => {
                 if (!peerRef.current) {
@@ -270,7 +270,7 @@ export const useScreenShare = (roomId: string) => {
                 updatePeers(peerId, { ...peerData, stream: undefined });
             });
 
-            setScreenShareState(IScreenShareState.NOT_SHARING);
+            setScreenShareState(ScreenShareState.NOT_SHARING);
         } catch (error) {
             console.error("화면 공유 중단 에러:", error);
         }

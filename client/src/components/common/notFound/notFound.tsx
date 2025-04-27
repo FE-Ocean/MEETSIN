@@ -5,11 +5,11 @@ import Button from "@/components/common/button/button";
 import { NOT_FOUND_MESSAGES_TYPE } from "@/constants/notFound.const";
 import style from "./notFound.module.scss";
 
-interface INotFoundProps {
+interface Props {
     message: NOT_FOUND_MESSAGES_TYPE;
 }
 
-const NotFound = ({ message }: INotFoundProps) => {
+const NotFound = ({ message }: Props) => {
     const router = useRouter();
 
     return (

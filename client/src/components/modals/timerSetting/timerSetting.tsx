@@ -6,11 +6,11 @@ import { numberToString } from "@/utils";
 import Button from "@/components/common/button/button";
 import style from "./timerSetting.module.scss";
 
-interface IModal {
+interface Props {
     onClose: () => void;
 }
 
-const TimerSetting = ({ onClose }: IModal) => {
+const TimerSetting = ({ onClose }: Props) => {
     const { roomId } = useParams();
 
     const minRef = useRef<HTMLInputElement>({} as HTMLInputElement);

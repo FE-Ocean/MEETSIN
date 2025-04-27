@@ -1,14 +1,14 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import Button from "@/components/common/button/button";
 
-interface IProps {
+interface Props {
     className: string;
     disabled: boolean;
     isMeetingView: boolean;
-    onClick: MouseEventHandler;
+    onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const ViewSwitchButton = ({ className, disabled, isMeetingView, onClick }: IProps) => {
+const ViewSwitchButton = ({ className, disabled, isMeetingView, onClick }: Props) => {
     const buttonType = isMeetingView ? "ghost" : "solid";
     const icon = isMeetingView ? "/icons/chevron_left.svg" : "/icons/device_desktop.svg";
     const text = isMeetingView ? "돌아가기" : "화면 공유 보기";
