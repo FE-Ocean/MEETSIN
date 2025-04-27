@@ -3,11 +3,12 @@
 
 .input_container {
     @include custom_input(2px, 17px);
+    position: relative;
+    flex-grow: 1;
 }
 
 .message_textarea {
     display: block;
-    width: 100%;
     max-height: 76px;
     padding-right: 33px;
     scrollbar-width: none;
@@ -16,8 +17,9 @@
 
 .send_button {
     position: absolute;
-    right: 24px;
-    bottom: 24.4px;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 28px;
     height: 28px;
     border-radius: 50%;

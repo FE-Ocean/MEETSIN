@@ -23,7 +23,6 @@ const PhaserMap = dynamic(() => import("../phaser/map/map"), {
 });
 
 const RoomContent = () => {
-    
     const screenShareState = useAtomValue(screenShareStateAtom);
 
     const [chatOpen, setChatOpen] = useState<boolean>(true);
@@ -90,6 +89,9 @@ const RoomContent = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        console.log(messages);
+    }, [messages]);
 
     return (
         <>

@@ -9,3 +9,8 @@ export interface IRoomUser {
     userId: string;
     userName: string;
 }
+
+export interface AiChatMessage {
+    role: "user" | "assistant" | "system";
+    content: string;
+}
