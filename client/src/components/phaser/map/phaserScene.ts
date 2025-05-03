@@ -15,7 +15,6 @@ export class MeetsInPhaserScene extends Scene {
     public inputManager!: InputManager;
     public configManager!: ConfigManager;
 
-    public layerGround!: Phaser.Tilemaps.TilemapLayer;
     public layerBlockOutdoor!: Phaser.Tilemaps.TilemapLayer;
     public layerBlockIndoor!: Phaser.Tilemaps.TilemapLayer;
     public layerBlockWall!: Phaser.Tilemaps.TilemapLayer;
