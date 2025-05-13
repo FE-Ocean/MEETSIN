@@ -88,39 +88,37 @@ const RoomContent = () => {
     }, []);
 
     return (
-        <>
-            <main className={style.main}>
-                <RoomGradientBackground className={style.gradient_background} />
-                <div className={style.container}>
-                    <ViewSwitchButton
-                        className={style.switch}
-                        disabled={!isScreenSharing}
-                        isMeetingView={isMeetingView}
-                        onClick={toggleView}
-                    />
-                    <div className={style.map_container}>
-                        <PhaserMap />
-                        {isMeetingView && (
-                            <ScreenWindow peerList={currentPeers} className={style.screen} />
-                        )}
-                    </div>
-                    {chatOpen && (
-                        <Chat
-                            messages={messages}
-                            className={style.chat}
-                            toggleChat={toggleChat}
-                            roomTitle={data?.roomName ?? ""}
-                        />
+        <main className={style.main}>
+            <RoomGradientBackground className={style.gradient_background} />
+            <div className={style.container}>
+                <ViewSwitchButton
+                    className={style.switch}
+                    disabled={!isScreenSharing}
+                    isMeetingView={isMeetingView}
+                    onClick={toggleView}
+                />
+                <div className={style.map_container}>
+                    <PhaserMap />
+                    {isMeetingView && (
+                        <ScreenWindow peerList={currentPeers} className={style.screen} />
                     )}
                 </div>
-                <Menu
-                    className={style.menu}
-                    onScreenShare={handleScreenShare}
-                    toggleChat={toggleChat}
-                    roomUsers={roomUsers}
-                />
-            </main>
-        </>
+                {chatOpen && (
+                    <Chat
+                        messages={messages}
+                        className={style.chat}
+                        toggleChat={toggleChat}
+                        roomTitle={data?.roomName ?? ""}
+                    />
+                )}
+            </div>
+            <Menu
+                className={style.menu}
+                onScreenShare={handleScreenShare}
+                toggleChat={toggleChat}
+                roomUsers={roomUsers}
+            />
+        </main>
     );
 };
 
