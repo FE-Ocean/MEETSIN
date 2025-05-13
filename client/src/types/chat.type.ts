@@ -1,5 +1,5 @@
 export interface Message {
-    nickname: string;
+    userName: string;
     message: string;
     time: string;
 }

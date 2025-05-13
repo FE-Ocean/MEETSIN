@@ -38,8 +38,8 @@ export class SocketManager {
         });
 
         // 플레이어 정지
-        this.socket.on("stop", (info: { playerId: string }) => {
-            this.scene.playerManager.stopPlayer(info.playerId);
+        this.socket.on("stop", (info: { socketId: string }) => {
+            this.scene.playerManager.stopPlayer(info.socketId);
         });
 
         // 플레이어 퇴장
