@@ -12,7 +12,7 @@ import Menu from "@/components/menu/menu";
 import RoomGradientBackground from "@/components/background/room/roomGradientBackground";
 import ScreenWindow from "@/components/screen/window/screenWindow";
 import Skeleton from "@/components/common/skeleton/skeleton";
-import ViewSwitchButton from "../screen/viewSwitch/viewSwitchButton";
+import ViewSwitchButton from "@/components/screen/viewSwitch/viewSwitchButton";
 import useChatSocket from "@/app/room/[roomId]/hooks/useChatSocket";
 import { notFound } from "next/navigation";
 import style from "./roomContent.module.scss";
