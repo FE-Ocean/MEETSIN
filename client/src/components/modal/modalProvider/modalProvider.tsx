@@ -4,11 +4,11 @@ import Lazy from "@/components/modal/lazy/lazy";
 import { modalAtom } from "@/jotai/atom";
 import { useAtomValue } from "jotai";
 
-interface IModalProvider {
+interface Props {
     children: React.ReactNode;
 }
 
-const ModalProvider = (props: IModalProvider) => {
+const ModalProvider = (props: Props) => {
     const modalState = useAtomValue(modalAtom);
 
     const modals = Object.keys(modalState).filter((item) => modalState[item].open);

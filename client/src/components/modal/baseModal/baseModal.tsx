@@ -2,12 +2,12 @@ import { createPortal } from "react-dom";
 import style from "./baseModal.module.scss";
 import { MouseEventHandler } from "react";
 
-interface IBaseModal {
+interface Props {
     children: React.ReactNode;
     onClose: () => void;
 }
 
-export const BaseModal = (props: IBaseModal) => {
+export const BaseModal = (props: Props) => {
     const { children, onClose } = props;
 
     const body = document.body;

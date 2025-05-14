@@ -4,16 +4,16 @@ import useTimer from "./hooks/useTimer";
 import useStopTimer from "./hooks/useStopTimer";
 import { useCreatePushNotification } from "@/apis/service/notification.service";
 import { numberToString } from "@/utils";
-import { IRoomUser } from "@/types/chat.type";
+import { RoomUser } from "@/types/chat.type";
 import timer_icon from "/public/icons/timer.svg";
 import style from "./timer.module.scss";
 
-interface ITimer {
-    roomUsers: IRoomUser[];
+interface Props {
+    roomUsers: RoomUser[];
     setIsTimerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Timer = ({ roomUsers, setIsTimerVisible }: ITimer) => {
+const Timer = ({ roomUsers, setIsTimerVisible }: Props) => {
     const [confirmStop, setConfirmStop] = useState(false);
     const hasCalledMutate = useRef(false);
 

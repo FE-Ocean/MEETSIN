@@ -6,10 +6,10 @@ import Phaser from "phaser";
 import { MeetsInPhaserScene } from "./phaserScene";
 import { phaserConfig } from "./phaserConfig";
 import { io } from "socket.io-client";
+import MapZoomButtons from "@/components/phaser/map/mapZoom/mapZoomButtons";
 import { useGetUserInfo } from "@/apis/service/user.service";
 import { useAtomValue } from "jotai";
 import { isChatFocusedAtom, zoomLevelAtom } from "@/jotai/atom";
-import MapZoomButtons from "@/components/button/mapZoom/mapZoomButtons";
 import style from "./map.module.scss";
 
 const Map = () => {
@@ -40,7 +40,7 @@ const Map = () => {
         phaserSocket.on("connect", () => {
             gameRef.current = new Phaser.Game({
                 ...phaserConfig,
-                scene: new MeetsInPhaserScene(roomId, user, phaserSocket),
+                scene: new MeetsInPhaserScene(roomId as string, phaserSocket),
             });
         });
 
@@ -61,6 +61,7 @@ const Map = () => {
             const scene = gameRef.current.scene.getScene(
                 "MeetsInPhaserScene",
             ) as MeetsInPhaserScene;
+
             if (scene) {
                 scene.setIsChatFocused(isChatFocused);
             }

@@ -6,16 +6,16 @@ import {
     patchRoom,
     createRoom,
 } from "../repository/room.repository";
-import { IPatchRoom, IRoomModel } from "@/types/room.type";
+import { PatchRoom, RoomModel } from "@/types/room.type";
 import { QUERY_KEY } from "@/constants/queryKey.const";
 
-interface ICreateRoom {
+interface CreateRoom {
     roomNameInput: string;
 }
 
 export const useCreateRoom = () => {
     const queryClient = useQueryClient();
-    const formatRoomData = async ({ roomNameInput }: ICreateRoom) => {
+    const formatRoomData = async ({ roomNameInput }: CreateRoom) => {
         const { data } = await createRoom(roomNameInput);
         return {
             roomId: data._id,
@@ -34,7 +34,7 @@ export const useCreateRoom = () => {
 
 export const useGetRoomData = (roomId: string) => {
     const formatRoomData = async () => {
-        const { data } = await getRoomInfo(roomId) as { data: IRoomModel };
+        const { data } = (await getRoomInfo(roomId)) as { data: RoomModel };
         return {
             id: data._id,
             roomName: data.room_name,
@@ -48,7 +48,7 @@ export const useGetRoomData = (roomId: string) => {
         queryFn: formatRoomData,
         retry: 0,
         staleTime: 1000 * 60 * 5,
-        cacheTime: 1000 * 60 * 10,
+        gcTime: 1000 * 60 * 10,
         refetchOnWindowFocus: false,
         enabled: !!roomId,
         initialData: undefined,
@@ -57,8 +57,8 @@ export const useGetRoomData = (roomId: string) => {
 
 export const usePatchRoomData = (roomId: string) => {
     const queryClient = useQueryClient();
-    const formatRoomData = async ({ roomName, roomId }: IPatchRoom) => {
-        const { data } = await patchRoom({ roomName, roomId }) as { data: IRoomModel };
+    const formatRoomData = async ({ roomName, roomId }: PatchRoom) => {
+        const { data } = (await patchRoom({ roomName, roomId })) as { data: RoomModel };
         return {
             id: data._id,
             roomName: data.room_name,
@@ -77,7 +77,7 @@ export const usePatchRoomData = (roomId: string) => {
 };
 
 export const formatRoomsData = async (accessToken?: string) => {
-    const { data } = await getUserRooms(accessToken) as { data: IRoomModel[] };
+    const { data } = (await getUserRooms(accessToken)) as { data: RoomModel[] };
     return data.map((room) => ({
         id: room._id,
         roomName: room.room_name,

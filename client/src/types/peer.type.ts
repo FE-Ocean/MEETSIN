@@ -1,16 +1,16 @@
-import {DataConnection} from "peerjs";
-import { IUser } from "./user.type";
+import { DataConnection } from "peerjs";
+import { User } from "./user.type";
 
-export interface IPeer {
-        user: IUser
-        stream: MediaStream | undefined
-        connection: DataConnection | undefined
-        peerId: string
+export interface PeerData {
+    user: User;
+    stream: MediaStream | undefined;
+    connection: DataConnection | undefined;
+    peerId: string;
 }
 
-export const IScreenShareState = {
+export const ScreenShareState = {
     SOMEONE_SHARING: "SOMEONE_SHARING",
     SELF_SHARING: "SELF_SHARING",
     NOT_SHARING: "NOT_SHARING",
 } as const;
-export type IScreenShareState = typeof IScreenShareState [keyof typeof IScreenShareState]
+export type ScreenShareState = (typeof ScreenShareState)[keyof typeof ScreenShareState];

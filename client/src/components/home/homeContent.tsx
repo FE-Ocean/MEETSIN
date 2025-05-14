@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import Button from "@/components/common/button/button";
 import useModal from "@/components/modal/hooks/useModal";
 import { LANDING_CONTENTS } from "@/constants/landing.const";
-import style from "../../app/style.module.scss";
+import style from "./homeContent.module.scss";
 
 const HomeContent = () => {
     const { onOpen } = useModal("login");

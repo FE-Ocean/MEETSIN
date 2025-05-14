@@ -1,10 +1,10 @@
 import React from "react";
-import style from "./login.module.scss";
-import LoginButton from "@/components/buttons/login/loginButton";
-import { SOCIAL_LOGIN } from "@/constants/login.const";
 import Image from "next/image";
 import useModal from "@/components/modal/hooks/useModal";
+import LoginButton from "@/components/home/login/loginButton";
 import { BaseModal } from "@/components/modal/baseModal/baseModal";
+import { SOCIAL_LOGIN } from "@/constants/login.const";
+import style from "./login.module.scss";
 
 const Login = () => {
     const { onClose } = useModal("login");

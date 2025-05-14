@@ -4,18 +4,18 @@ import style from "./userMenu.module.scss";
 import { useRouter } from "next/navigation";
 import { useLogout } from "@/apis/service/user.service";
 
-interface IUserMenu {
+interface Props {
     className?: string;
 }
 
-const UserMenu = (props: IUserMenu) => {
+const UserMenu = (props: Props) => {
     const router = useRouter();
     const { mutate } = useLogout();
     const logout = () => {
         mutate(undefined, {
             onSettled: () => {
-                router.push("/"); 
-            }
+                router.push("/");
+            },
         });
     };
 

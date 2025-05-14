@@ -3,11 +3,11 @@ import style from "./userButton.module.scss";
 
 import { useGetUserInfo } from "@/apis/service/user.service";
 
-interface IUserButton {
+interface Props {
     onClick?: () => void;
 }
 
-const UserInfoButton = (props: IUserButton) => {
+const UserInfoButton = (props: Props) => {
     const { onClick } = props;
 
     const { data: user } = useGetUserInfo();
