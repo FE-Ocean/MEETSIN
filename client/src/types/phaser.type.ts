@@ -17,7 +17,7 @@ export interface PlayerInfo {
     };
 }
 
-export interface RoomInfo {
+export interface GameRoomInfo {
     players: {
         [key: string]: PlayerInfo;
     };
@@ -61,7 +61,7 @@ export interface PlayerContainerType extends Phaser.GameObjects.Container {
     moving: boolean;
 }
 
-export interface EtcKeyboardInputType {
+export interface WASDKeys {
     W: Phaser.Input.Keyboard.Key;
     A: Phaser.Input.Keyboard.Key;
     S: Phaser.Input.Keyboard.Key;

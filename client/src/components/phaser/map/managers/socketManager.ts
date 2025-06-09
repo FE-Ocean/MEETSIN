@@ -1,6 +1,6 @@
 import { Socket } from "socket.io-client";
 import { MeetsInPhaserScene } from "../phaserScene";
-import { PlayerInfo, RoomInfo, SyncInfo } from "@/types/phaser.type";
+import { PlayerInfo, GameRoomInfo, SyncInfo } from "@/types/phaser.type";
 
 export class SocketManager {
     private socket: Socket;
@@ -18,7 +18,7 @@ export class SocketManager {
         this.socket.emit("join_phaser_room", this.roomId);
 
         // 방 정보 수신
-        this.socket.on("roomInfo", (roomInfo: RoomInfo) => {
+        this.socket.on("gameRoomInfo", (roomInfo: GameRoomInfo) => {
             const { players } = roomInfo;
             Object.entries(players).forEach(([id, playerInfo]) => {
                 id === this.socket.id
