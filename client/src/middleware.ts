@@ -9,9 +9,9 @@ const publicUrls: Routes = {
 };
 
 export async function middleware(request: NextRequest) {
-    const accessToken = request.cookies.get("access_token");
+    const refreshToken = request.cookies.get("refresh_token");
     const exists = publicUrls[request.nextUrl.pathname];
-    if (!accessToken) {
+    if (!refreshToken) {
         if (!exists) {
             return NextResponse.redirect(new URL("/", request.url));
         }

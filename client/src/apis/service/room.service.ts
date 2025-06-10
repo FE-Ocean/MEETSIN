@@ -76,8 +76,8 @@ export const usePatchRoomData = (roomId: string) => {
     });
 };
 
-export const formatRoomsData = async (accessToken?: string) => {
-    const { data } = (await getUserRooms(accessToken)) as { data: RoomModel[] };
+export const formatRoomsData = async () => {
+    const { data } = (await getUserRooms()) as { data: RoomModel[] };
     return data.map((room) => ({
         id: room._id,
         roomName: room.room_name,
@@ -86,8 +86,8 @@ export const formatRoomsData = async (accessToken?: string) => {
     }));
 };
 
-export const useGetUserRooms = (accessToken?: string) => {
-    return useQuery({ queryKey: QUERY_KEY.rooms, queryFn: () => formatRoomsData(accessToken) });
+export const useGetUserRooms = () => {
+    return useQuery({ queryKey: QUERY_KEY.rooms, queryFn: () => formatRoomsData() });
 };
 
 export const useDeleteRoom = (roomId: string) => {

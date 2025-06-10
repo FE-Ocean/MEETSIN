@@ -2,17 +2,11 @@ import { baseClient, createAuthHeader } from "@/modules/fetchClient";
 import { PatchRoom, RoomModel } from "@/types/room.type";
 
 export const getRoomInfo = async (roomId: string, accessToken?: string) => {
-    const headers = createAuthHeader(accessToken);
-
-    return await baseClient.get<RoomModel>(`/rooms/${roomId}`, { headers });
+    return await baseClient.get<RoomModel>(`/rooms/${roomId}`);
 };
 
-export const getUserRooms = async (accessToken?: string) => {
-    const headers = createAuthHeader(accessToken);
-
-    return await baseClient.get<RoomModel[]>("/rooms/user", {
-        headers,
-    });
+export const getUserRooms = async () => {
+    return await baseClient.get<RoomModel[]>("/rooms/user");
 };
 
 export const createRoom = async (roomNameInput: string) => {
