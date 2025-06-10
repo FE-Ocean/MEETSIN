@@ -7,6 +7,7 @@ import { LoginRequest } from "src/common/types/request.type";
 import { JwtGuard, JwtRefreshGuard } from "../../common/guards/auth.guard";
 import { UsersService } from "src/modules/users/users.service";
 import { ResponseDto } from "src/common/interfaces/response.interface";
+import { UsersRepository } from "../users/users.repository";
 
 @Controller("auth")
 export class AuthController {
@@ -16,6 +17,7 @@ export class AuthController {
         private readonly authService: AuthService,
         private readonly userService: UsersService,
         private readonly configService: ConfigService,
+        private readonly usersRepository: UsersRepository,
     ) {
         const isPROD = this.configService.get("MODE") === "PROD";
         this.cookieOptions = {
@@ -26,7 +28,7 @@ export class AuthController {
                 sameSite: "none",
                 domain: `.${this.configService.get("CLIENT_URL").replace("https://", "")}`,
             }),
-            // httpOnly: true, // 개발 환경 테스트를 위해 임시 비활성화
+            httpOnly: true, // 개발 환경에서는 false로 바꾸어 테스트
         };
     }
 
@@ -37,7 +39,7 @@ export class AuthController {
     @Get("/redirect/google")
     @UseGuards(AuthGuard("google"))
     async googleAuthRedirect(@Req() req: LoginRequest, @Res() res: Response) {
-        const { access_token, refresh_token } = await this.authService.signIn(req, res);
+        const { refresh_token } = await this.authService.signIn(req.user);
         res.cookie("refresh_token", refresh_token, this.cookieOptions);
         res.status(302).redirect(this.configService.get("CLIENT_URL"));
     }
@@ -49,27 +51,23 @@ export class AuthController {
     @Get("/redirect/kakao")
     @UseGuards(AuthGuard("kakao"))
     async kakaoAuthRedirect(@Req() req: LoginRequest, @Res() res: Response) {
-        const { access_token, refresh_token } = await this.authService.signIn(req, res);
+        const { refresh_token } = await this.authService.signIn(req.user);
         res.cookie("refresh_token", refresh_token, this.cookieOptions);
         res.status(302).redirect(this.configService.get("CLIENT_URL"));
     }
 
     @Get("/login/guest")
-    loginAsGuest(@Req() req, @Res() res) {
+    async loginAsGuest(@Req() req, @Res() res) {
         const guestCookieOptions = {
             ...this.cookieOptions,
             maxAge: 24 * 60 * 60 * 1000,
         };
-        res.cookie(
-            "refresh_token",
-            this.configService.get("GUEST_ACCESS_TOKEN"),
-            guestCookieOptions,
+        const guestUser = await this.usersRepository.findUserById(
+            this.configService.get("GUEST_OBJECT_ID"),
         );
-        res.status(302).redirect(
-            `${this.configService.get("CLIENT_URL")}?token=${this.configService.get(
-                "GUEST_ACCESS_TOKEN",
-            )}`,
-        );
+        const { refresh_token } = await this.authService.signIn(guestUser);
+        res.cookie("refresh_token", refresh_token, guestCookieOptions);
+        res.status(302).redirect(this.configService.get("CLIENT_URL"));
     }
 
     @Get("/user")

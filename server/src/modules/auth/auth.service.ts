@@ -1,15 +1,8 @@
-import {
-    BadRequestException,
-    ForbiddenException,
-    Injectable,
-    UnauthorizedException,
-} from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { User } from "src/modules/users/schemas/user.schema";
+import { INewUser, User } from "src/modules/users/schemas/user.schema";
 import { UsersRepository } from "src/modules/users/users.repository";
-import { Response } from "express";
 import { JwtService } from "@nestjs/jwt";
-import { LoginRequest } from "src/common/types/request.type";
 
 @Injectable()
 export class AuthService {
@@ -19,8 +12,12 @@ export class AuthService {
         private readonly configService: ConfigService,
     ) {}
 
-    private generateJwtPayload(user: User) {
-        return { id: user._id.toString(), email: user.email };
+    private generateJwtPayload(user: User | INewUser) {
+        const userId = "id" in user ? user.id : user._id.toString();
+        if (!userId) {
+            throw new BadRequestException("User ID is required");
+        }
+        return { id: userId, email: user.email };
     }
 
     private generateTokens(payload: any) {
@@ -32,32 +29,26 @@ export class AuthService {
         return { access_token, refresh_token };
     }
 
-    async signIn(req: LoginRequest, res: Response) {
+    async signIn(user: User) {
         try {
-            const userData = req.user as User;
-
-            if (!userData) {
+            if (!user) {
                 throw new BadRequestException("Unauthenticated");
             }
 
-            let user = await this.usersRepository.findUserByEmailAndProvider(
-                userData.email,
-                userData.provider,
+            let existingUser = await this.usersRepository.findUserByEmailAndProvider(
+                user.email,
+                user.provider,
             );
 
-            if (!user) {
-                const newUser = await this.signUp(userData);
-                user = newUser.toObject();
+            if (!existingUser) {
+                const newUser = await this.signUp(user);
+                existingUser = newUser.toObject();
             }
-            const jwtPayload = {
-                id: user._id.toString(),
-                email: user.email,
-            };
 
-            const payload = this.generateJwtPayload(user);
+            const payload = this.generateJwtPayload(existingUser);
             const tokens = this.generateTokens(payload);
             await this.usersRepository.updateTokens(
-                user,
+                existingUser,
                 tokens.access_token,
                 tokens.refresh_token,
             );
@@ -79,8 +70,7 @@ export class AuthService {
 
     async refreshTokens(user: User) {
         const payload = this.generateJwtPayload(user);
-
-        const newTokens = this.generateTokens({ id: payload.id, email: payload.email });
+        const newTokens = this.generateTokens(payload);
 
         await this.usersRepository.updateTokens(
             user,
