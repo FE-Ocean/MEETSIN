@@ -96,10 +96,9 @@ export class PhaserGateway implements OnGatewayConnection, OnGatewayInit, OnGate
         this.roomCharacters.get(roomId).add(characterId);
 
         const playerInfo = {
-            rotation: 0,
             x: 360,
             y: 192,
-            playerId: socket.id,
+            socketId: socket.id,
             user: socket.data.user,
             characterId: characterId, // 캐릭터 ID 추가
         };
@@ -110,7 +109,9 @@ export class PhaserGateway implements OnGatewayConnection, OnGatewayInit, OnGate
             this.gameRooms[roomId] = { players: { [socket.id]: playerInfo } };
         }
 
-        socket.emit("roomInfo", this.gameRooms[roomId]);
+        socket.emit("characterId", characterId);
+
+        socket.emit("gameRoomInfo", this.gameRooms[roomId]);
         socket.to(roomId).emit("newPlayer", { playerInfo });
     }
 

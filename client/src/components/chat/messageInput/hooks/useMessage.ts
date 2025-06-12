@@ -1,6 +1,8 @@
 import { RefObject, useState } from "react";
 import { roomSocket } from "@/socket";
 import { useParams } from "next/navigation";
+import { useAtomValue } from "jotai";
+import { characterIdAtom } from "@/jotai/atom";
 
 const useMessage = ({
     payload,
@@ -10,6 +12,7 @@ const useMessage = ({
 }) => {
     const params = useParams();
     const roomId = params.roomId as string;
+    const characterId = useAtomValue(characterIdAtom);
 
     const [message, setMessage] = useState("");
 
@@ -26,6 +29,7 @@ const useMessage = ({
         const messageInfo = {
             roomId,
             message,
+            characterId,
             ...payload,
         };
 

@@ -8,8 +8,9 @@ import { phaserConfig } from "./phaserConfig";
 import { io } from "socket.io-client";
 import MapZoomButtons from "@/components/phaser/map/mapZoom/mapZoomButtons";
 import { useGetUserInfo } from "@/apis/service/user.service";
-import { useAtomValue } from "jotai";
-import { isChatFocusedAtom, zoomLevelAtom } from "@/jotai/atom";
+import { useAtomValue, useSetAtom } from "jotai";
+import { characterIdAtom, isChatFocusedAtom, zoomLevelAtom } from "@/jotai/atom";
+import MapZoomButtons from "@/components/button/mapZoom/mapZoomButtons";
 import style from "./map.module.scss";
 
 const Map = () => {
@@ -17,6 +18,7 @@ const Map = () => {
     const { data: user } = useGetUserInfo();
     const isChatFocused = useAtomValue(isChatFocusedAtom);
     const zoomLevel = useAtomValue(zoomLevelAtom);
+    const setCharacterId = useSetAtom(characterIdAtom);
 
     const gameRef = useRef<Phaser.Game | null>(null);
 
@@ -35,6 +37,11 @@ const Map = () => {
             },
             autoConnect: true,
             forceNew: true,
+        });
+
+        phaserSocket.off("characterId");
+        phaserSocket.on("characterId", (characterId: number) => {
+            setCharacterId(characterId);
         });
 
         phaserSocket.on("connect", () => {

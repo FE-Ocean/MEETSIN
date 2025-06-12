@@ -18,7 +18,7 @@ const MessageInput = () => {
 
     const { message, onChange, sendMessage } = useMessage({
         inputRef: textareaRef,
-        payload: { nickname: user?.userName },
+        payload: { userName: user?.userName },
     });
 
     const adjustHeight = useAdjustHeight({ inputRef: textareaRef });

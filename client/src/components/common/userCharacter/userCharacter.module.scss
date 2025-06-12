@@ -1,0 +1,18 @@
+.character_icon {
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    background-size: 128px 96px; // 64px*2, 48px*2
+    background-position: -32px 0;
+    image-rendering: pixelated;
+
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: white;
+
+    @for $i from 1 through 6 {
+        &[data-character="#{$i}"] {
+            background-image: url("/players/player#{$i}.png");
+        }
+    }
+}
