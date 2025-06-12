@@ -90,7 +90,7 @@ export class MeetsInPhaserScene extends Scene {
                 y: this.currentPlayer?.y!,
                 roomId: this.roomId,
                 direction: this.inputManager.getCurrentDirection(),
-                playerId: this.currentPlayer?.playerId!,
+                socketId: this.currentPlayer?.socketId!,
             });
         }
 

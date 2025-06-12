@@ -22,6 +22,7 @@ interface User {
     socketId: string;
     userId: Types.ObjectId;
     userName: string;
+    characterId?: number;
 }
 
 interface ITimer {
@@ -73,10 +74,11 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
 
     @SubscribeMessage("join_room")
     handleJoin(
-        @MessageBody() data: { roomId: string; userId: Types.ObjectId; userName: string },
+        @MessageBody()
+        data: { roomId: string; userId: Types.ObjectId; userName: string; characterId?: number },
         @ConnectedSocket() socket: Socket,
     ) {
-        const { roomId, userId, userName } = data;
+        const { roomId, userId, userName, characterId } = data;
 
         this.socketRooms.set(socket.id, roomId);
 
@@ -91,8 +93,9 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayInit, OnGatew
 
         if (existingUser) {
             existingUser.socketId = socket.id;
+            existingUser.characterId = characterId;
         } else {
-            const user: User = { socketId: socket.id, userId, userName };
+            const user: User = { socketId: socket.id, userId, userName, characterId };
             roomUsers.push(user);
         }
 

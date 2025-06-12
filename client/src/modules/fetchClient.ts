@@ -1,4 +1,7 @@
+import { accessTokenAtom } from "@/jotai/atom";
 import { FetchError } from "./error";
+import { getDefaultStore } from "jotai/vanilla";
+import { refreshToken } from "@/apis/repository/user.repository";
 
 interface FetchClientOptions {
     baseURL: string;
@@ -44,10 +47,16 @@ export class FetchClient {
 
     protected async request<T>(path: string, config: RequestInit): Promise<ApiResponse<T>> {
         const url = this.baseURL + path;
+        const store = getDefaultStore();
+        const accessToken = store.get(accessTokenAtom);
+        const setAccessToken = (token: string) => {
+            store.set(accessTokenAtom, token);
+        };
 
         const headers = {
             ...this.config.headers,
             ...config.headers,
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         };
 
         const requestConfig: RequestInit = {
@@ -57,7 +66,21 @@ export class FetchClient {
         };
 
         try {
-            const response = await fetch(url, requestConfig);
+            let response: Response;
+            response = await fetch(url, requestConfig);
+            if (response.status === 401 && path !== "/auth/refresh") {
+                const { data } = await refreshToken();
+                const newToken = data.access_token;
+                if (newToken) {
+                    setAccessToken(newToken);
+                    const retryHeaders = {
+                        ...headers,
+                        Authorization: `Bearer ${newToken}`,
+                    };
+                    const retryConfig = { ...requestConfig, headers: retryHeaders };
+                    response = await fetch(url, retryConfig);
+                }
+            }
 
             if (!response.ok) {
                 const errorBody = await response.json();
@@ -85,27 +108,3 @@ export const baseClient = FetchClient.create({
         credentials: "include",
     },
 });
-
-export const addAuthHeader = (accessToken: string, config: RequestInit = {}) => {
-    if (!accessToken) {
-        throw new Error("access token이 없거나 올바르지 않습니다.");
-    }
-
-    return {
-        ...config,
-        headers: {
-            ...config.headers,
-            Authorization: `Bearer ${accessToken}`,
-        },
-    };
-};
-
-export const createAuthHeader = (accessToken?: string) => {
-    const headers: { [key: string]: string } = {};
-
-    if (accessToken) {
-        headers.Authorization = `Bearer ${accessToken}`;
-    }
-
-    return headers;
-};

@@ -1,11 +1,13 @@
 import { Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { AuthService } from "./auth.service";
 import { CookieOptions, Response } from "express";
 import { AuthGuard } from "@nestjs/passport";
 import { LoginRequest } from "src/common/types/request.type";
-import { JwtGuard } from "../../common/guards/auth.guard";
+import { JwtGuard, JwtRefreshGuard } from "../../common/guards/auth.guard";
 import { UsersService } from "src/modules/users/users.service";
 import { ResponseDto } from "src/common/interfaces/response.interface";
+import { UsersRepository } from "../users/users.repository";
 
 @Controller("auth")
 export class AuthController {
@@ -14,16 +16,19 @@ export class AuthController {
     constructor(
         private readonly authService: AuthService,
         private readonly userService: UsersService,
+        private readonly configService: ConfigService,
+        private readonly usersRepository: UsersRepository,
     ) {
-        const isPROD = process.env.MODE === "PROD";
-
+        const isPROD = this.configService.get("MODE") === "PROD";
         this.cookieOptions = {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7일
             secure: isPROD,
+            path: "/",
             ...(isPROD && {
                 sameSite: "none",
-                domain: `.${process.env.CLIENT_URL.replace("https://", "")}`,
+                domain: `.${this.configService.get("CLIENT_URL").replace("https://", "")}`,
             }),
+            httpOnly: true, // 개발 환경에서는 false로 바꾸어 테스트
         };
     }
 
@@ -34,9 +39,9 @@ export class AuthController {
     @Get("/redirect/google")
     @UseGuards(AuthGuard("google"))
     async googleAuthRedirect(@Req() req: LoginRequest, @Res() res: Response) {
-        const { access_token } = await this.authService.signIn(req, res);
-        res.cookie("access_token", access_token, this.cookieOptions);
-        res.status(302).redirect(process.env.CLIENT_URL);
+        const { refresh_token } = await this.authService.signIn(req.user);
+        res.cookie("refresh_token", refresh_token, this.cookieOptions);
+        res.status(302).redirect(this.configService.get("CLIENT_URL"));
     }
 
     @Get("/login/kakao")
@@ -46,19 +51,23 @@ export class AuthController {
     @Get("/redirect/kakao")
     @UseGuards(AuthGuard("kakao"))
     async kakaoAuthRedirect(@Req() req: LoginRequest, @Res() res: Response) {
-        const { access_token } = await this.authService.signIn(req, res);
-        res.cookie("access_token", access_token, this.cookieOptions);
-        res.status(302).redirect(process.env.CLIENT_URL);
+        const { refresh_token } = await this.authService.signIn(req.user);
+        res.cookie("refresh_token", refresh_token, this.cookieOptions);
+        res.status(302).redirect(this.configService.get("CLIENT_URL"));
     }
 
     @Get("/login/guest")
-    loginAsGuest(@Req() req, @Res() res) {
+    async loginAsGuest(@Req() req, @Res() res) {
         const guestCookieOptions = {
             ...this.cookieOptions,
             maxAge: 24 * 60 * 60 * 1000,
-        }
-        res.cookie("access_token", process.env.GUEST_ACCESS_TOKEN, guestCookieOptions);
-        res.status(302).redirect(process.env.CLIENT_URL);
+        };
+        const guestUser = await this.usersRepository.findUserById(
+            this.configService.get("GUEST_OBJECT_ID"),
+        );
+        const { refresh_token } = await this.authService.signIn(guestUser);
+        res.cookie("refresh_token", refresh_token, guestCookieOptions);
+        res.status(302).redirect(this.configService.get("CLIENT_URL"));
     }
 
     @Get("/user")
@@ -67,20 +76,32 @@ export class AuthController {
         const userData = this.userService.entityToDto(req.user);
         return {
             data: userData,
-            message: "사용자 정보 조회 성공"
+            message: "사용자 정보 조회 성공",
         };
     }
 
     @Post("/logout")
     logout(@Req() req, @Res({ passthrough: true }) res: Response): ResponseDto {
-        res.clearCookie("access_token", {
+        res.clearCookie("refresh_token", {
             ...this.cookieOptions,
             expires: new Date(0),
             maxAge: 0,
         });
         return {
             data: null,
-            message: "로그아웃 성공"
+            message: "로그아웃 성공",
+        };
+    }
+
+    @Post("/refresh")
+    @UseGuards(JwtRefreshGuard)
+    async refresh(@Req() req: LoginRequest, @Res({ passthrough: true }) res: Response) {
+        const { access_token, refresh_token } = await this.authService.refreshTokens(req.user);
+
+        res.cookie("refresh_token", refresh_token, this.cookieOptions);
+
+        return {
+            access_token,
         };
     }
 }

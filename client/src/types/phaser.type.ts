@@ -9,7 +9,7 @@ export type Direction = (typeof DIRECTION)[keyof typeof DIRECTION];
 export interface PlayerInfo {
     x: number;
     y: number;
-    playerId: string;
+    socketId: string;
     characterId: string;
     user: {
         userId: string;
@@ -17,7 +17,7 @@ export interface PlayerInfo {
     };
 }
 
-export interface RoomInfo {
+export interface GameRoomInfo {
     players: {
         [key: string]: PlayerInfo;
     };
@@ -28,7 +28,7 @@ export interface SyncInfo {
     y: number;
     roomId: string;
     direction: Direction | null;
-    playerId: string;
+    socketId: string;
 }
 
 export interface MoveInfo {
@@ -42,13 +42,13 @@ export interface MoveInfo {
 
 export interface CurrentPlayerType extends Phaser.Physics.Arcade.Sprite {
     moving?: boolean;
-    playerId: string;
+    socketId: string;
     characterId: string;
 }
 
 export interface OtherPlayerType extends Phaser.Physics.Arcade.Sprite {
     nameTag: Phaser.GameObjects.Text;
-    playerId: string;
+    socketId: string;
     characterId: string;
     moving?: boolean;
 }
@@ -56,12 +56,12 @@ export interface OtherPlayerType extends Phaser.Physics.Arcade.Sprite {
 export interface PlayerContainerType extends Phaser.GameObjects.Container {
     playerSprite: Phaser.Physics.Arcade.Sprite;
     nameTag: Phaser.GameObjects.Text;
-    playerId: string;
+    socketId: string;
     characterId: string;
     moving: boolean;
 }
 
-export interface EtcKeyboardInputType {
+export interface WASDKeys {
     W: Phaser.Input.Keyboard.Key;
     A: Phaser.Input.Keyboard.Key;
     S: Phaser.Input.Keyboard.Key;

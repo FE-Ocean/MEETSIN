@@ -11,7 +11,7 @@ export class PlayerManager {
     }
 
     addPlayer(playerInfo: PlayerInfo): PlayerContainerType {
-        const { x, y, playerId, characterId, user } = playerInfo;
+        const { x, y, socketId, characterId, user } = playerInfo;
 
         // 스프라이트 생성
         const playerSprite = this.scene.physics.add.sprite(0, 0, `player${characterId}`);
@@ -33,7 +33,7 @@ export class PlayerManager {
         body.setCollideWorldBounds(true);
         body.setSize(playerSprite.width, playerSprite.height);
 
-        container.playerId = playerId;
+        container.socketId = socketId;
         container.moving = false;
         container.playerSprite = playerSprite;
         container.characterId = characterId;
@@ -74,7 +74,7 @@ export class PlayerManager {
 
     syncPlayerPosition(info: SyncInfo) {
         const playerContainer = (this.otherPlayers.getChildren() as PlayerContainerType[]).find(
-            (player) => player.playerId === info.playerId,
+            (player) => player.socketId === info.socketId,
         );
 
         const animationKey = `walk-${info.direction}-${playerContainer?.characterId}`;
@@ -92,11 +92,11 @@ export class PlayerManager {
         playerContainer.setPosition(info.x, info.y);
     }
 
-    stopPlayer(playerId: string): void {
+    stopPlayer(socketId: string): void {
         if (!this.otherPlayers) return;
 
         const playerContainer = (this.otherPlayers.getChildren() as PlayerContainerType[]).find(
-            (playerContainer) => playerContainer.playerId === playerId,
+            (playerContainer) => playerContainer.socketId === socketId,
         );
 
         const stopAnim = playerContainer?.playerSprite.anims.currentAnim?.key.slice(5);
@@ -107,11 +107,11 @@ export class PlayerManager {
         playerContainer!.moving = false;
     }
 
-    removePlayer(playerId: string): void {
+    removePlayer(socketId: string): void {
         if (!this.otherPlayers) return;
 
         (this.otherPlayers.getChildren() as PlayerContainerType[]).forEach((otherPlayer) => {
-            if (playerId === otherPlayer.playerId) {
+            if (socketId === otherPlayer.socketId) {
                 otherPlayer.nameTag.destroy();
                 otherPlayer.destroy();
             }
