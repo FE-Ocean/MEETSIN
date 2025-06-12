@@ -2,6 +2,7 @@ export interface Message {
     userName: string;
     message: string;
     time: string;
+    characterId: number;
 }
 
 export interface RoomUser {

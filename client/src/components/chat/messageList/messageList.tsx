@@ -25,6 +25,7 @@ const MessageList = (props: Props) => {
                         message={message.message}
                         time={message.time}
                         userName={message.userName}
+                        characterId={message.characterId}
                     />
                 );
             })}

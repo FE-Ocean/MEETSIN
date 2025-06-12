@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { RoomUser } from "@/types/chat.type";
 import { useGetRoomData } from "@/apis/service/room.service";
+import UserCharacter from "@/components/common/userCharacter/userCharacter";
 import style from "./roomUserInfo.module.scss";
 
 interface Props {
@@ -19,7 +20,7 @@ const RoomUserInfo = ({ roomUsers }: Props) => {
             <ul>
                 {roomUsers.map((user) => (
                     <li key={user.userId} className={style.room_user_info_item}>
-                        <div className={style.character_icon} data-character={user.characterId} />
+                        <UserCharacter characterId={user.characterId!} />
                         <span>{user.userName}</span>
                     </li>
                 ))}
