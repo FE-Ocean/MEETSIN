@@ -2,20 +2,20 @@
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { useAtomValue } from "jotai";
 import { screenShareStateAtom } from "@/jotai/atom";
 import Chat from "@/components/chat/chat";
 import Menu from "@/components/menu/menu";
+import RoomGradientBackground from "@/components/background/room/roomGradientBackground";
 import ScreenWindow from "@/components/screen/window/screenWindow";
 import Skeleton from "@/components/common/skeleton/skeleton";
+import ViewSwitchButton from "@/components/buttons/viewSwitch/viewSwitchButton";
 import useChatSocket from "@/app/room/[roomId]/hooks/useChatSocket";
 import { useScreenShare } from "@/app/room/[roomId]/hooks/useScreenShare";
-import ViewSwitchButton from "@/components/buttons/viewSwitch/viewSwitchButton";
 import { ScreenShareState } from "@/types/peer.type";
-import RoomGradientBackground from "@/components/background/room/roomGradientBackground";
 import { useGetRoomData } from "@/apis/service/room.service";
 import style from "@/app/room/[roomId]/style.module.scss";
-import { notFound } from "next/navigation";
 
 const PhaserMap = dynamic(() => import("../phaser/map/map"), {
     ssr: false,
