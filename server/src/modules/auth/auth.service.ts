@@ -2,6 +2,9 @@ import { BadRequestException, ForbiddenException, Injectable } from "@nestjs/com
 import { INewUser, User } from "src/modules/users/schemas/user.schema";
 import { UsersRepository } from "src/modules/users/users.repository";
 import { JwtService } from "@nestjs/jwt";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 @Injectable()
 export class AuthService {
