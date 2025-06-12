@@ -37,12 +37,6 @@ dotenv.config();
                 expiresIn: "15m",
             },
         }),
-        JwtModule.register({
-            secret: process.env.JWT_REFRESH_SECRET,
-            signOptions: {
-                expiresIn: "30d",
-            },
-        }),
     ],
     providers: [
         AuthService,
