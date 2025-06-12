@@ -1,5 +1,4 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import dotenv from "dotenv";
@@ -10,10 +9,7 @@ dotenv.config();
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
-    constructor(
-        private readonly configService: ConfigService,
-        private readonly usersRepository: UsersRepository,
-    ) {
+    constructor(private readonly usersRepository: UsersRepository) {
         super({
             jwtFromRequest: ExtractJwt.fromExtractors([
                 (request) => {
@@ -22,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
                 ExtractJwt.fromAuthHeaderAsBearerToken(),
             ]),
             ignoreExpiration: false,
-            secretOrKey: configService.get("JWT_SECRET"),
+            secretOrKey: process.env.JWT_SECRET,
         });
     }
 
@@ -37,7 +33,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(Strategy, "jwt-refresh") {
-    constructor(private readonly configService: ConfigService) {
+    constructor() {
         super({
             jwtFromRequest: ExtractJwt.fromExtractors([
                 (request) => {
@@ -45,7 +41,7 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, "jwt-refresh"
                 },
             ]),
             ignoreExpiration: false,
-            secretOrKey: configService.get("JWT_REFRESH_SECRET"),
+            secretOrKey: process.env.JWT_REFRESH_SECRET,
         });
     }
 
