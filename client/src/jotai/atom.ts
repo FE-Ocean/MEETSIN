@@ -28,3 +28,5 @@ export const roomIdAtom = atom("");
 export const isChatFocusedAtom = atom(false);
 
 export const zoomLevelAtom = atom(MIN_ZOOM_LEVEL);
+
+export const characterIdAtom = atom<number>();

@@ -1,9 +1,9 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import style from "./roomUserInfo.module.scss";
 import { RoomUser } from "@/types/chat.type";
 import { useGetRoomData } from "@/apis/service/room.service";
+import style from "./roomUserInfo.module.scss";
 
 interface Props {
     roomUsers: RoomUser[];
@@ -19,7 +19,7 @@ const RoomUserInfo = ({ roomUsers }: Props) => {
             <ul>
                 {roomUsers.map((user) => (
                     <li key={user.userId} className={style.room_user_info_item}>
-                        <div className={style.avatar} />
+                        <div className={style.character_icon} data-character={user.characterId} />
                         <span>{user.userName}</span>
                     </li>
                 ))}

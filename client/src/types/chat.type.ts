@@ -8,4 +8,5 @@ export interface RoomUser {
     socketId: string;
     userId: string;
     userName: string;
+    characterId?: number;
 }

@@ -109,6 +109,8 @@ export class PhaserGateway implements OnGatewayConnection, OnGatewayInit, OnGate
             this.gameRooms[roomId] = { players: { [socket.id]: playerInfo } };
         }
 
+        socket.emit("characterId", characterId);
+
         socket.emit("gameRoomInfo", this.gameRooms[roomId]);
         socket.to(roomId).emit("newPlayer", { playerInfo });
     }
