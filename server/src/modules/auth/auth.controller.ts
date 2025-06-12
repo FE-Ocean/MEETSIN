@@ -2,11 +2,14 @@ import { Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { CookieOptions, Response } from "express";
 import { AuthGuard } from "@nestjs/passport";
+import dotenv from "dotenv";
 import { LoginRequest } from "src/common/types/request.type";
 import { JwtGuard, JwtRefreshGuard } from "../../common/guards/auth.guard";
 import { UsersService } from "src/modules/users/users.service";
 import { ResponseDto } from "src/common/interfaces/response.interface";
 import { UsersRepository } from "../users/users.repository";
+
+dotenv.config();
 
 @Controller("auth")
 export class AuthController {

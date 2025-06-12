@@ -23,9 +23,6 @@ dotenv.config();
                 schema: UserSchema,
             },
         ]),
-        ConfigModule.forRoot({
-            isGlobal: true,
-        }),
         forwardRef(() => UsersModule),
         PassportModule.register({
             defaultStrategy: "jwt",
