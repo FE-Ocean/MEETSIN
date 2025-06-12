@@ -29,4 +29,6 @@ export const isChatFocusedAtom = atom(false);
 
 export const zoomLevelAtom = atom(MIN_ZOOM_LEVEL);
 
+export const accessTokenAtom = atom<string | null>(null);
+
 export const characterIdAtom = atom<number>();

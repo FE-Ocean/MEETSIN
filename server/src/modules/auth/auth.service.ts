@@ -1,50 +1,59 @@
 import { BadRequestException, ForbiddenException, Injectable } from "@nestjs/common";
-import { User } from "src/modules/users/schemas/user.schema";
+import { ConfigService } from "@nestjs/config";
+import { INewUser, User } from "src/modules/users/schemas/user.schema";
 import { UsersRepository } from "src/modules/users/users.repository";
-import dotenv from "dotenv";
-import { Response } from "express";
 import { JwtService } from "@nestjs/jwt";
-import { LoginRequest } from "src/common/types/request.type";
-
-dotenv.config();
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly usersRepository: UsersRepository,
         private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
     ) {}
 
-    async signIn(req: LoginRequest, res: Response) {
-        try {
-            const userData = req.user as User;
+    private generateJwtPayload(user: User | INewUser) {
+        const userId = "id" in user ? user.id : user._id.toString();
+        if (!userId) {
+            throw new BadRequestException("User ID is required");
+        }
+        return { id: userId, email: user.email };
+    }
 
-            if (!userData) {
+    private generateTokens(payload: any) {
+        const access_token = this.jwtService.sign(payload, { expiresIn: "15m" });
+        const refresh_token = this.jwtService.sign(payload, {
+            secret: this.configService.get("JWT_REFRESH_SECRET"),
+            expiresIn: "30d",
+        });
+        return { access_token, refresh_token };
+    }
+
+    async signIn(user: User) {
+        try {
+            if (!user) {
                 throw new BadRequestException("Unauthenticated");
             }
 
-            let user = await this.usersRepository.findUserByEmailAndProvider(
-                userData.email,
-                userData.provider,
+            let existingUser = await this.usersRepository.findUserByEmailAndProvider(
+                user.email,
+                user.provider,
             );
 
-            if (!user) {
-                const newUser = await this.signUp(userData);
-                user = newUser.toObject();
+            if (!existingUser) {
+                const newUser = await this.signUp(user);
+                existingUser = newUser.toObject();
             }
 
-            const jwtPayload = {
-                id: user._id.toString(),
-                email: user.email,
-            };
+            const payload = this.generateJwtPayload(existingUser);
+            const tokens = this.generateTokens(payload);
+            await this.usersRepository.updateTokens(
+                existingUser,
+                tokens.access_token,
+                tokens.refresh_token,
+            );
 
-            const accessToken = this.jwtService.sign(jwtPayload);
-
-            await this.usersRepository.updateAccessToken(user, accessToken);
-
-            return {
-                access_token: accessToken,
-            };
+            return tokens;
         } catch (error) {
             throw new ForbiddenException(error);
         }
@@ -57,5 +66,17 @@ export class AuthService {
         } catch (error) {
             throw new ForbiddenException("회원가입 중 오류가 발생했습니다.");
         }
+    }
+
+    async refreshTokens(user: User) {
+        const payload = this.generateJwtPayload(user);
+        const newTokens = this.generateTokens(payload);
+
+        await this.usersRepository.updateTokens(
+            user,
+            newTokens.access_token,
+            newTokens.refresh_token,
+        );
+        return newTokens;
     }
 }

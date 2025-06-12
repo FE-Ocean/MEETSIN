@@ -8,6 +8,7 @@ import MsClarity from "./msClarity";
 import "../styles/reset.css";
 import "../styles/global.scss";
 import { GoogleAnalytics } from "./googleAnalytics";
+import { RefreshProvider } from "./refreshProvider";
 
 const noto_Sans_KR = Noto_Sans_KR({ weight: ["400", "700"], subsets: ["latin"] });
 
@@ -51,7 +52,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 <NewQueryProviders>
                     <JotaiProvider>
                         <ModalProvider>
-                            {children}
+                            <RefreshProvider>{children}</RefreshProvider>
                             <MsClarity />
                         </ModalProvider>
                     </JotaiProvider>
