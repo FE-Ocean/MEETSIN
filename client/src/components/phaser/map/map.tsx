@@ -6,6 +6,7 @@ import Phaser from "phaser";
 import { MeetsInPhaserScene } from "./phaserScene";
 import { phaserConfig } from "./phaserConfig";
 import { io } from "socket.io-client";
+import MapZoomButtons from "@/components/phaser/map/mapZoom/mapZoomButtons";
 import { useGetUserInfo } from "@/apis/service/user.service";
 import { useAtomValue, useSetAtom } from "jotai";
 import { characterIdAtom, isChatFocusedAtom, zoomLevelAtom } from "@/jotai/atom";

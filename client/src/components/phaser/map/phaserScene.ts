@@ -15,7 +15,6 @@ export class MeetsInPhaserScene extends Scene {
     public inputManager!: InputManager;
     public configManager!: ConfigManager;
 
-    public layerGround!: Phaser.Tilemaps.TilemapLayer;
     public layerBlockOutdoor!: Phaser.Tilemaps.TilemapLayer;
     public layerBlockIndoor!: Phaser.Tilemaps.TilemapLayer;
     public layerBlockWall!: Phaser.Tilemaps.TilemapLayer;
@@ -27,11 +26,11 @@ export class MeetsInPhaserScene extends Scene {
     private roomId: string;
     private socket: Socket;
 
+    private isChatFocused: boolean;
+
     private readonly TILE_SIZE = 16;
     private readonly PLAYER_SPEED = 10;
     private readonly VELOCITY = this.PLAYER_SPEED * this.TILE_SIZE;
-
-    private isChatFocused: boolean;
 
     constructor(roomId: string, socket: Socket) {
         super({ key: "MeetsInPhaserScene" });
@@ -71,6 +70,10 @@ export class MeetsInPhaserScene extends Scene {
 
     setIsChatFocused(isChatFocused: boolean): void {
         this.isChatFocused = isChatFocused;
+
+        if (isChatFocused) {
+            this.input.keyboard!.disableGlobalCapture();
+        }
     }
 
     setZoomLevel(zoomLevel: number): void {

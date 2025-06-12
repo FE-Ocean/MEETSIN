@@ -57,9 +57,21 @@ export class JwtGuard extends AuthGuard("jwt") {
     }
 
     async validateToken(token) {
-        const isValid = await this.jwtService.verify(token, {
-            secret: process.env.JWT_SECRET,
-        });
-        return isValid;
+        try {
+            // 게스트 토큰인 경우 만료 검사 건너뛰기
+            if (token === process.env.GUEST_ACCESS_TOKEN) {
+                return this.jwtService.decode(token);
+            }
+
+            const isValid = await this.jwtService.verify(token, {
+                secret: process.env.JWT_SECRET,
+            });
+            return isValid;
+        } catch (error) {
+            if (error?.name === "TokenExpiredError") {
+                throw new UnauthorizedException("토큰이 만료되었습니다.");
+            }
+            throw new UnauthorizedException("유효하지 않은 토큰입니다.");
+        }
     }
 }

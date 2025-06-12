@@ -1,6 +1,7 @@
 import { MeetsInPhaserScene } from "../phaserScene";
 import { DIRECTION, Direction, WASDKeys } from "@/types/phaser.type";
 
+
 export class InputManager {
     private scene: MeetsInPhaserScene;
     private keyboardInput: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -27,6 +28,7 @@ export class InputManager {
         }
 
         if (this.keyboardInput.down.isDown || this.wasdKeysInput?.S.isDown) {
+
             return DIRECTION.down;
         }
         return null;

@@ -5,6 +5,9 @@ import { useParams } from "next/navigation";
 import { notFound } from "next/navigation";
 import { useAtomValue } from "jotai";
 import { screenShareStateAtom } from "@/jotai/atom";
+import { ScreenShareState } from "@/types/peer.type";
+import { useScreenShare } from "@/app/room/[roomId]/hooks/useScreenShare";
+import { useGetRoomData } from "@/apis/service/room.service";
 import Chat from "@/components/chat/chat";
 import Menu from "@/components/menu/menu";
 import RoomGradientBackground from "@/components/background/room/roomGradientBackground";
@@ -16,6 +19,7 @@ import { useScreenShare } from "@/app/room/[roomId]/hooks/useScreenShare";
 import { ScreenShareState } from "@/types/peer.type";
 import { useGetRoomData } from "@/apis/service/room.service";
 import style from "@/app/room/[roomId]/style.module.scss";
+
 
 const PhaserMap = dynamic(() => import("../phaser/map/map"), {
     ssr: false,
@@ -88,39 +92,37 @@ const RoomContent = () => {
     }, []);
 
     return (
-        <>
-            <main className={style.main}>
-                <RoomGradientBackground className={style.gradient_background} />
-                <div className={style.container}>
-                    <ViewSwitchButton
-                        className={style.switch}
-                        disabled={!isScreenSharing}
-                        isMeetingView={isMeetingView}
-                        onClick={toggleView}
-                    />
-                    <div className={style.map_container}>
-                        <PhaserMap />
-                        {isMeetingView && (
-                            <ScreenWindow peerList={currentPeers} className={style.screen} />
-                        )}
-                    </div>
-                    {chatOpen && (
-                        <Chat
-                            messages={messages}
-                            className={style.chat}
-                            toggleChat={toggleChat}
-                            roomTitle={data?.roomName ?? ""}
-                        />
+        <main className={style.main}>
+            <RoomGradientBackground className={style.gradient_background} />
+            <div className={style.container}>
+                <ViewSwitchButton
+                    className={style.switch}
+                    disabled={!isScreenSharing}
+                    isMeetingView={isMeetingView}
+                    onClick={toggleView}
+                />
+                <div className={style.map_container}>
+                    <PhaserMap />
+                    {isMeetingView && (
+                        <ScreenWindow peerList={currentPeers} className={style.screen} />
                     )}
                 </div>
-                <Menu
-                    className={style.menu}
-                    onScreenShare={handleScreenShare}
-                    toggleChat={toggleChat}
-                    roomUsers={roomUsers}
-                />
-            </main>
-        </>
+                {chatOpen && (
+                    <Chat
+                        messages={messages}
+                        className={style.chat}
+                        toggleChat={toggleChat}
+                        roomTitle={data?.roomName ?? ""}
+                    />
+                )}
+            </div>
+            <Menu
+                className={style.menu}
+                onScreenShare={handleScreenShare}
+                toggleChat={toggleChat}
+                roomUsers={roomUsers}
+            />
+        </main>
     );
 };
 
