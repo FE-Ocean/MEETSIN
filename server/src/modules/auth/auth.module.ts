@@ -4,7 +4,7 @@ import { ConfigModule } from "@nestjs/config";
 import { UsersModule } from "src/modules/users/users.module";
 import { KakaoStrategy } from "./strategies/kakao.strategy";
 import { GoogleStrategy } from "./strategies/google.strategy";
-import { JwtStrategy } from "./strategies/jwt.strategy";
+import { JwtRefreshStrategy, JwtStrategy } from "./strategies/jwt.strategy";
 import { AuthController } from "./auth.controller";
 import dotenv from "dotenv";
 import { JwtModule } from "@nestjs/jwt";
@@ -34,11 +34,24 @@ dotenv.config();
         JwtModule.register({
             secret: process.env.JWT_SECRET,
             signOptions: {
+                expiresIn: "15m",
+            },
+        }),
+        JwtModule.register({
+            secret: process.env.JWT_REFRESH_SECRET,
+            signOptions: {
                 expiresIn: "30d",
             },
         }),
     ],
-    providers: [AuthService, UsersService, GoogleStrategy, KakaoStrategy, JwtStrategy],
+    providers: [
+        AuthService,
+        UsersService,
+        GoogleStrategy,
+        KakaoStrategy,
+        JwtStrategy,
+        JwtRefreshStrategy,
+    ],
     controllers: [AuthController],
     exports: [AuthService],
 })

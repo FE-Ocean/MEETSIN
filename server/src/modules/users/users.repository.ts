@@ -27,7 +27,10 @@ export class UsersRepository {
         return await this.userModel.create(userData);
     }
 
-    async updateAccessToken(user: User, accessToken: string) {
-        await this.userModel.findByIdAndUpdate(user.id, { access_token: accessToken });
+    async updateTokens(user: User, accessToken: string, refreshToken: string) {
+        await this.userModel.findByIdAndUpdate(user.id, { 
+            access_token: accessToken,
+            refresh_token: refreshToken 
+        });
     }
 }

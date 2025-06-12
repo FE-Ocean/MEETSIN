@@ -1,14 +1,16 @@
-import { cookies } from "next/headers";
+import { refreshToken } from "@/apis/repository/user.repository";
+import { accessTokenAtom } from "@/jotai/atom";
+import { getDefaultStore } from "jotai";
 
-export const getToken = () => {
+export const getToken = async () => {
     // 서버 사이드에서 실행
     if (typeof window === "undefined") {
-        return cookies().get("access_token")?.value;
+        const { data } = await refreshToken();
+        const accessToken = data.access_token;
+        return accessToken;
     }
-    
+
     // 클라이언트 사이드에서 실행
-    return document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("access_token="))
-        ?.split("=")[1];
+    const store = getDefaultStore();
+    return store.get(accessTokenAtom);
 };
