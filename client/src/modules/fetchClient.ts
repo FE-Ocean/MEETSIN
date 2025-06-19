@@ -5,7 +5,7 @@ import { refreshToken } from "@/apis/repository/user.repository";
 
 interface FetchClientOptions {
     baseURL: string;
-    config: RequestInit;
+    config: RequestInit & { credentials?: RequestCredentials };
 }
 
 interface ApiResponse<T> {
@@ -13,13 +13,24 @@ interface ApiResponse<T> {
 }
 
 export class FetchClient {
-    constructor(private baseURL: string, private config: RequestInit = {}) {}
+    constructor(
+        private baseURL: string,
+        private config: RequestInit & { credentials?: RequestCredentials } = {},
+    ) {
+        this.config = {
+            credentials: "include",
+            ...config,
+        };
+    }
 
     static create(options: FetchClientOptions) {
         return new FetchClient(options.baseURL, options.config);
     }
 
-    public get<T>(path: string, config: RequestInit = {}): Promise<ApiResponse<T>> {
+    public get<T>(
+        path: string,
+        config: RequestInit & { credentials?: RequestCredentials } = {},
+    ): Promise<ApiResponse<T>> {
         return this.request<T>(path, { ...config, method: "GET" });
     }
 
@@ -44,42 +55,54 @@ export class FetchClient {
         const requestBody = body instanceof FormData ? body : JSON.stringify(body);
         return this.request<T>(path, { ...config, method: "PATCH", body: requestBody });
     }
-
-    protected async request<T>(path: string, config: RequestInit): Promise<ApiResponse<T>> {
+    protected async request<T>(
+        path: string,
+        config: RequestInit & { credentials?: RequestCredentials } = {},
+    ): Promise<ApiResponse<T>> {
         const url = this.baseURL + path;
-        const store = getDefaultStore();
-        const accessToken = store.get(accessTokenAtom);
-        const setAccessToken = (token: string) => {
-            store.set(accessTokenAtom, token);
+        const headers: Record<string, string> = {
+            "Content-Type": "application/json",
+            ...(this.config.headers as Record<string, string>),
+            ...((config.headers as Record<string, string>) || {}),
         };
+        if (typeof window !== "undefined") {
+            const store = getDefaultStore();
+            const accessToken = store.get(accessTokenAtom);
+            if (accessToken) {
+                headers["Authorization"] = `Bearer ${accessToken}`;
+            }
+        }
 
-        const headers = {
-            ...this.config.headers,
-            ...config.headers,
-            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-        };
-
+        // 최종 요청 설정
         const requestConfig: RequestInit = {
             ...this.config,
             ...config,
             headers,
+            credentials: "include", // 항상 쿠키 포함
         };
 
         try {
             let response: Response;
             response = await fetch(url, requestConfig);
             if (response.status === 401 && path !== "/auth/refresh") {
+                let retryConfig = { ...requestConfig };
+
+                // 서버 사이드에서는 현재 요청의 쿠키를 사용하여 리프레시
                 const { data } = await refreshToken();
                 const newToken = data.access_token;
-                if (newToken) {
-                    setAccessToken(newToken);
-                    const retryHeaders = {
-                        ...headers,
-                        Authorization: `Bearer ${newToken}`,
-                    };
-                    const retryConfig = { ...requestConfig, headers: retryHeaders };
-                    response = await fetch(url, retryConfig);
+
+                // 클라이언트 사이드에서만 store 업데이트
+                if (typeof window !== "undefined") {
+                    const store = getDefaultStore();
+                    store.set(accessTokenAtom, newToken);
                 }
+
+                // 항상 새 토큰으로 재시도
+                retryConfig.headers = {
+                    ...retryConfig.headers,
+                    Authorization: `Bearer ${newToken}`,
+                };
+                response = await fetch(url, retryConfig);
             }
 
             if (!response.ok) {
