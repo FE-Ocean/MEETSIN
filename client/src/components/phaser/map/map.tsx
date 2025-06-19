@@ -10,7 +10,6 @@ import MapZoomButtons from "@/components/phaser/map/mapZoom/mapZoomButtons";
 import { useGetUserInfo } from "@/apis/service/user.service";
 import { useAtomValue, useSetAtom } from "jotai";
 import { characterIdAtom, isChatFocusedAtom, zoomLevelAtom } from "@/jotai/atom";
-import MapZoomButtons from "@/components/button/mapZoom/mapZoomButtons";
 import style from "./map.module.scss";
 
 const Map = () => {
