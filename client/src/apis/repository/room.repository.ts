@@ -1,8 +1,11 @@
-import { baseClient, createAuthHeader } from "@/modules/fetchClient";
+import { baseClient } from "@/modules/fetchClient";
 import { PatchRoom, RoomModel } from "@/types/room.type";
 
-export const getRoomInfo = async (roomId: string, accessToken?: string) => {
-    return await baseClient.get<RoomModel>(`/rooms/${roomId}`);
+export const getRoomInfo = async (roomId: string, config?: RequestInit) => {
+    return await baseClient.get<RoomModel>(`/rooms/${roomId}`, {
+        ...config,
+        credentials: 'include',
+    });
 };
 
 export const getUserRooms = async () => {
