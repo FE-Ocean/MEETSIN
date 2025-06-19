@@ -8,18 +8,14 @@ import { screenShareStateAtom } from "@/jotai/atom";
 import { ScreenShareState } from "@/types/peer.type";
 import { useScreenShare } from "@/app/room/[roomId]/hooks/useScreenShare";
 import { useGetRoomData } from "@/apis/service/room.service";
+import useChatSocket from "@/app/room/[roomId]/hooks/useChatSocket";
 import Chat from "@/components/chat/chat";
 import Menu from "@/components/menu/menu";
 import RoomGradientBackground from "@/components/background/room/roomGradientBackground";
 import ScreenWindow from "@/components/screen/window/screenWindow";
 import Skeleton from "@/components/common/skeleton/skeleton";
-import ViewSwitchButton from "@/components/buttons/viewSwitch/viewSwitchButton";
-import useChatSocket from "@/app/room/[roomId]/hooks/useChatSocket";
-import { useScreenShare } from "@/app/room/[roomId]/hooks/useScreenShare";
-import { ScreenShareState } from "@/types/peer.type";
-import { useGetRoomData } from "@/apis/service/room.service";
-import style from "@/app/room/[roomId]/style.module.scss";
-
+import ViewSwitchButton from "../screen/viewSwitch/viewSwitchButton";
+import style from "./roomContent.module.scss";
 
 const PhaserMap = dynamic(() => import("../phaser/map/map"), {
     ssr: false,
