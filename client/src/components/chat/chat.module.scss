@@ -13,13 +13,17 @@
 .chat_header {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 15px;
+    padding-bottom: 12px;
 
     span.chat_text {
-        font-size: 18px;
+        font-size: 15px;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        margin-left: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     button.close_button {
