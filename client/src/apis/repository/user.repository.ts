@@ -9,6 +9,9 @@ export const logout = async () => {
     return await baseClient.post<void>("/auth/logout");
 };
 
-export const refreshToken = async () => {
-    return await baseClient.post<{ access_token: string }>("/auth/refresh");
+export const refreshToken = async (config?: { headers?: HeadersInit }) => {
+    return await baseClient.post<{ access_token: string }>("/auth/refresh", undefined, {
+        headers: config?.headers,
+        credentials: "include",
+    });
 };
