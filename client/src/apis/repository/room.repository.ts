@@ -4,7 +4,7 @@ import { PatchRoom, RoomModel } from "@/types/room.type";
 export const getRoomInfo = async (roomId: string, config?: RequestInit) => {
     return await baseClient.get<RoomModel>(`/rooms/${roomId}`, {
         ...config,
-        credentials: 'include',
+        credentials: "include",
     });
 };
 
