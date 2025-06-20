@@ -87,6 +87,20 @@ const RoomContent = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        const registerServiceWorker = async () => {
+            if (!("serviceWorker" in navigator)) {
+                alert(
+                    "이 브라우저는 서비스 워커를 제공하지 않아 푸시 알림 기능이 지원되지 않습니다.",
+                );
+                return;
+            }
+
+            await navigator.serviceWorker.register("/serviceWorker.js");
+        };
+        registerServiceWorker();
+    }, []);
+
     return (
         <main className={style.main}>
             <RoomGradientBackground className={style.gradient_background} />
