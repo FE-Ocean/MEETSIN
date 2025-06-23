@@ -20,11 +20,7 @@ export class NotificationService {
     }
 
     createSubscription(userId: Types.ObjectId, subscription: SubscriptionDTO) {
-        const user = this.userModel.updateOne(
-            { _id: userId },
-            { $addToSet: { notification: subscription } },
-        );
-        return user;
+        return this.userModel.updateOne({ _id: userId }, { $set: { notification: subscription } });
     }
 
     async deleteSubscription(userId: Types.ObjectId) {
