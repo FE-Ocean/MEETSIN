@@ -13,7 +13,7 @@ export class NotificationController {
 
     @Get()
     async getSubscriptionFromDB(@CurrentUser() user: User): Promise<ResponseDto> {
-        const subscription = await this.notificationService.getSubscription(user.id);
+        const subscription = await this.notificationService.getSubscription(user._id);
         return {
             data: subscription,
             message: "알림 구독 정보가 성공적으로 조회되었습니다",
@@ -25,7 +25,7 @@ export class NotificationController {
         @CurrentUser() user: User,
         @Body("notification") subscription: SubscriptionDTO,
     ): Promise<ResponseDto> {
-        const result = await this.notificationService.createSubscription(user.id, subscription);
+        const result = await this.notificationService.createSubscription(user._id, subscription);
         return {
             data: result,
             message: "알림 구독이 성공적으로 등록되었습니다",
@@ -34,7 +34,7 @@ export class NotificationController {
 
     @Delete()
     async deleteSubscriptionFromDB(@CurrentUser() user: User): Promise<ResponseDto> {
-        const result = await this.notificationService.deleteSubscription(user.id);
+        const result = await this.notificationService.deleteSubscription(user._id);
         return {
             data: result,
             message: "알림 구독이 성공적으로 해제되었습니다",
