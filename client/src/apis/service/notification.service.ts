@@ -12,17 +12,15 @@ const getServiceWorkerStatus = async () => {
     return navigator.serviceWorker.ready;
 };
 
-// 브라우저의 기존 푸시 구독을 가져오는 함수  getSubscriptionFromBrowser
 export const getSubscriptionFromBrowser = async () => {
-    const serviceWorker = await getServiceWorkerStatus(); // 서비스 워커 준비된 상태인지 확인
+    const serviceWorker = await getServiceWorkerStatus();
     return serviceWorker.pushManager.getSubscription();
-    // 브라우저의 기존 푸시 구독을 가져옴. null 혹은 PushSubscription 객체 반환
 };
 
 export const startSubscription = async () => {
     try {
         if (!("PushManager" in window)) {
-            alert("푸시 알림 이 브라우저에서 지원 안 함");
+            alert("현재 브라우저에서 푸시 알림을 지원하지 않습니다");
             return;
         }
 
@@ -43,7 +41,7 @@ export const startSubscription = async () => {
     } catch (error) {
         console.error(error);
         if (Notification.permission === "denied") {
-            alert("알림 허용해주세요");
+            alert("푸시 알림을 허용해주세요");
         }
     }
 };

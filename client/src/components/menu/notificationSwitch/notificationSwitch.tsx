@@ -22,13 +22,11 @@ const NotificationSwitch = () => {
 
         const getActiveSubscription = async () => {
             try {
-                // DB 에러가 있거나 DB 구독이 없으면 구독 없음
                 if (dbError || !DBSubscription) {
                     setHasSubscription(false);
                     return;
                 }
 
-                // 브라우저 구독 확인
                 const browserSubscription = await getSubscriptionFromBrowser();
                 setHasSubscription(!!browserSubscription);
             } catch (error) {
