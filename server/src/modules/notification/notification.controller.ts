@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, UseGuards } from "@nestjs/common";
 import { CurrentUser } from "src/common/decorators/user.decorator";
 import { JwtGuard } from "src/common/guards/auth.guard";
 import { User } from "src/modules/users/schemas/user.schema";
@@ -11,6 +11,15 @@ import { ResponseDto } from "src/common/interfaces/response.interface";
 export class NotificationController {
     constructor(private readonly notificationService: NotificationService) {}
 
+    @Get()
+    async getSubscriptionFromDB(@CurrentUser() user: User): Promise<ResponseDto> {
+        const subscription = await this.notificationService.getSubscription(user.id);
+        return {
+            data: subscription,
+            message: "알림 구독 정보가 성공적으로 조회되었습니다",
+        };
+    }
+
     @Post()
     async createSubscriptionToDB(
         @CurrentUser() user: User,
@@ -19,7 +28,7 @@ export class NotificationController {
         const result = await this.notificationService.createSubscription(user.id, subscription);
         return {
             data: result,
-            message: "알림 구독이 성공적으로 등록되었습니다"
+            message: "알림 구독이 성공적으로 등록되었습니다",
         };
     }
 
@@ -28,7 +37,7 @@ export class NotificationController {
         const result = await this.notificationService.deleteSubscription(user.id);
         return {
             data: result,
-            message: "알림 구독이 성공적으로 해제되었습니다"
+            message: "알림 구독이 성공적으로 해제되었습니다",
         };
     }
 
@@ -37,7 +46,7 @@ export class NotificationController {
         const result = await this.notificationService.createPushNotification(userIds);
         return {
             data: result,
-            message: "푸시 알림이 성공적으로 전송되었습니다"
+            message: "푸시 알림이 성공적으로 전송되었습니다",
         };
     }
 }
