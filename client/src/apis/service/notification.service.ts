@@ -12,9 +12,11 @@ const getServiceWorkerStatus = async () => {
     return navigator.serviceWorker.ready;
 };
 
-export const getExistingSubscription = async () => {
-    const serviceWorker = await getServiceWorkerStatus();
+// 브라우저의 기존 푸시 구독을 가져오는 함수  getSubscriptionFromBrowser
+export const getSubscriptionFromBrowser = async () => {
+    const serviceWorker = await getServiceWorkerStatus(); // 서비스 워커 준비된 상태인지 확인
     return serviceWorker.pushManager.getSubscription();
+    // 브라우저의 기존 푸시 구독을 가져옴. null 혹은 PushSubscription 객체 반환
 };
 
 export const startSubscription = async () => {
@@ -24,7 +26,7 @@ export const startSubscription = async () => {
             return;
         }
 
-        const existingSubscription = await getExistingSubscription();
+        const existingSubscription = await getSubscriptionFromBrowser();
 
         if (existingSubscription) {
             return; // 이미 구독 있음
@@ -60,7 +62,7 @@ const formatSubscription = async (subscription: PushSubscription) => {
 };
 
 export const cancelSubscription = async () => {
-    const existingSubscription = await getExistingSubscription();
+    const existingSubscription = await getSubscriptionFromBrowser();
 
     if (!existingSubscription) {
         return; // 취소할 구독이 없다.
