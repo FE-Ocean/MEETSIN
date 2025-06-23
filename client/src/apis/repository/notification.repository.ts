@@ -1,6 +1,10 @@
 import { baseClient } from "@/modules/fetchClient";
 import { Subscription } from "@/types/subscription.type";
 
+export const getSubscriptionFromDB = async () => {
+    return await baseClient.get<Subscription | null>("/notification");
+};
+
 export const createSubscriptionToDB = async (subscription: Subscription) => {
     return await baseClient.post<Subscription>("/notification", { notification: subscription });
 };

@@ -1,10 +1,12 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
     createSubscriptionToDB,
     deleteSubscriptionFromDB,
     createPushNotification,
+    getSubscriptionFromDB,
 } from "../repository/notification.repository";
 import { Subscription } from "@/types/subscription.type";
+import { QUERY_KEY } from "@/constants/queryKey.const";
 
 const getServiceWorkerStatus = async () => {
     return navigator.serviceWorker.ready;
@@ -67,6 +69,16 @@ export const cancelSubscription = async () => {
     existingSubscription.unsubscribe();
 
     return true;
+};
+
+export const useGetSubscriptionFromDB = () => {
+    return useQuery({
+        queryKey: QUERY_KEY.subscription,
+        queryFn: async () => {
+            const { data } = await getSubscriptionFromDB();
+            return data;
+        },
+    });
 };
 
 export const useCreateSubscriptionToDB = () => {

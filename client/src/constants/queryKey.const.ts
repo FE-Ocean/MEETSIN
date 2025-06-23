@@ -4,8 +4,9 @@ export const QUERY_KEY = {
     room: (roomId?: string) => {
         const baseKey = ["room"];
         if (roomId) {
-            return baseKey.concat(roomId);  
+            return baseKey.concat(roomId);
         }
         return baseKey;
     },
+    subscription: ["subscription"],
 };
