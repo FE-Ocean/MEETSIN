@@ -44,7 +44,7 @@
 
 실시간 채팅으로 멤버들과 소통해 보세요. 질문을 나누거나 아이디어를 공유하기에 딱 좋아요.
 
-<img src="https://github.com/user-attachments/assets/0999528a-9d92-45dc-85de-9044c7709606" width="600px" alt="채팅"/>
+<img src="https://github.com/user-attachments/assets/a63dbcf2-3439-44bb-8522-087f065e43fd" width="604" alt="채팅" />
 
 ### 화면 공유
 
