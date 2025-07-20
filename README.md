@@ -52,7 +52,7 @@
 
 화면을 공유하며 멤버들과 함께 문제를 해결해 보세요. 시각적인 자료로 학습 효과를 높일 수 있어요.
 
-<img src="https://github.com/user-attachments/assets/e147d359-ed64-4145-8528-8f9d89b13788" width="700px" alt="화면 공유하기"/>
+<img src="https://github.com/user-attachments/assets/4331df26-8af2-4f61-8e3b-23255d4178a5" width="600px" alt="화면 공유하기"/>
 
 <br><br>
 
@@ -60,7 +60,7 @@
 
 다른 멤버가 화면을 공유하면 오른쪽 상단의 '화면 공유 보기' 버튼이 활성화돼요.
 
-<img src="https://github.com/user-attachments/assets/63c1da1c-3e74-4d84-883c-a04d3c7d77d3" width="700px" alt="화면 공유 보기"/>
+<img src="https://github.com/user-attachments/assets/a47816e6-20bc-4268-8a04-70c28e230506" width="600px" alt="화면 공유 보기"/>
 
 <br><br>
 
