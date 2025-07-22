@@ -33,10 +33,11 @@
 <img src="https://github.com/user-attachments/assets/4427c70f-18ef-42e5-9230-9fccdbe4a8c6" width="600px" alt="타이머"/>
 
 <br>시간이 끝나면 종료음과 푸시 알림을 보내드려요.
+<br>(푸시 알림은 왼쪽 하단의 ‘알림 받기’ 버튼을 눌러 활성화되어 있는 경우에만 도착해요.)
 
 <img src="https://github.com/user-attachments/assets/be5e965c-8472-46af-ae0d-00f69c442a45" width="300px" alt="알림"/>
 
-(MEETSIN 화면을 벗어난 경우에만 푸시 알림 전송)
+MEETSIN 화면을 벗어난 경우에만 푸시 알림이 전송됩니다.
 
 <br>
 
