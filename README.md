@@ -53,7 +53,7 @@ MEETSIN 화면을 벗어난 경우에만 푸시 알림이 전송됩니다.
 
 화면을 공유하며 멤버들과 함께 문제를 해결해 보세요. 시각적인 자료로 학습 효과를 높일 수 있어요.
 
-<img src="https://github.com/user-attachments/assets/4331df26-8af2-4f61-8e3b-23255d4178a5" width="600px" alt="화면 공유하기"/>
+<img src="" width="600px" alt="화면 공유하기"/>
 
 <br><br>
 
