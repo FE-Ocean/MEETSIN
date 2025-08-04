@@ -2,8 +2,6 @@
 
 # MEETSIN
 
-### [meetsin.link](meetsin.link)
-
 스터디 및 협업을 위한 메타버스 플랫폼
 
 <br>
